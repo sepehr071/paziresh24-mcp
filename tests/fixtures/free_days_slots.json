@@ -1,0 +1,91 @@
+{
+ "status": 1,
+ "message": "درخواست شما با موفقیت انجام شد",
+ "result": {
+  "1791232200": [
+   {
+    "from": 1791286200,
+    "turns": {
+     "1791286200": 0,
+     "1791286800": 0,
+     "1791287400": 0,
+     "1791288000": 0
+    },
+    "slice": 600,
+    "rebook": [],
+    "workhour_info": {
+     "book_type_ids": [
+      "7"
+     ],
+     "myself_from": "15:00:00.0000",
+     "myself_to": "22:00:00.0000",
+     "id": "9fb0f5a5-7aea-455f-be3d-ba1246bbb502"
+    }
+   }
+  ],
+  "1791318600": [
+   {
+    "from": 1791372600,
+    "turns": {
+     "1791372600": 0,
+     "1791373200": 0,
+     "1791373800": 0,
+     "1791374400": 0
+    },
+    "slice": 600,
+    "rebook": [],
+    "workhour_info": {
+     "book_type_ids": [
+      "7"
+     ],
+     "myself_from": "15:00:00.0000",
+     "myself_to": "22:00:00.0000",
+     "id": "9fb0f5a5-9e31-4fea-ba33-8527b1c7f2f1"
+    }
+   }
+  ],
+  "1791577800": [
+   {
+    "from": 1791631800,
+    "turns": {
+     "1791631800": 0,
+     "1791632400": 0,
+     "1791633000": 0,
+     "1791633600": 0
+    },
+    "slice": 600,
+    "rebook": [],
+    "workhour_info": {
+     "book_type_ids": [
+      "7"
+     ],
+     "myself_from": "15:00:00.0000",
+     "myself_to": "22:00:00.0000",
+     "id": "9fb0f5a5-0a4c-4ce8-a6eb-36cc38fe159f"
+    }
+   }
+  ]
+ },
+ "calendar": {
+  "today_time": "2026-10-06T01:19:48+03:30",
+  "start_date": "2026-10-06",
+  "end_date": "2026-10-16",
+  "turns": [
+   1791232200,
+   1791318600,
+   1791577800,
+   1791664200,
+   1791750600,
+   1791837000,
+   1791923400
+  ],
+  "no_freeturn_days": [],
+  "holidays": {},
+  "non_workdays": "4,5",
+  "non_turns_date": [],
+  "disabled_dates": null,
+  "evening_shift_change": 0
+ },
+ "has_more": false,
+ "workhour_range": null
+}

@@ -1,0 +1,24 @@
+[
+ {
+  "date": "2026-11-13",
+  "events": [
+   {
+    "description": "شهادت حضرت فاطمه زهرا (س)",
+    "additional_description": "۳ جمادی الثانیه",
+    "is_holiday": true
+   }
+  ],
+  "is_holiday": true
+ },
+ {
+  "date": "2026-12-23",
+  "events": [
+   {
+    "description": "ولادت امام علی (ع) و روز پدر",
+    "additional_description": "۱۳ رجب",
+    "is_holiday": true
+   }
+  ],
+  "is_holiday": true
+ }
+]

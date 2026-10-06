@@ -1,0 +1,404 @@
+{
+ "status": 1,
+ "message": "درخواست شما با موفقیت انجام شد",
+ "result": {
+  "slugInfo": {
+   "id": "1483",
+   "slug": "بیمارستان-تخصصی-و-فوق-تخصصی-تریتا",
+   "type": "center",
+   "owner_id": "204",
+   "server_id": "1",
+   "created_at": "1544711834",
+   "updated_at": "1544711834",
+   "update_timestamp": "2021-04-11 12:10:55",
+   "is_master": null,
+   "master_id": null,
+   "slug_master": false
+  },
+  "type": "center",
+  "data": {
+   "id": "204",
+   "server_id": "1",
+   "status": "1",
+   "slug": "بیمارستان-تخصصی-و-فوق-تخصصی-تریتا",
+   "connection": "1",
+   "name": "بیمارستان تخصصی و فوق تخصصی تریتا",
+   "center_type": "2",
+   "center_type_name": "بیمارستان",
+   "image": "/getImage/p24/search-hospitalclinic/c0c22afaa099ec2ee67564c95a1052d8.jpg",
+   "image-sized": [],
+   "desk": "",
+   "biography": "<p><strong>بیمارستان تخصصی و فوق تخصصی تریتا</strong> در زمینی به مساحت ۶۰۰۰ متر مربع با زیر بنا بیش از ۲۰,۰۰۰ متر در ۱۸ طبقه احداث شده است، این بیمارستان در نوع خود<strong> منحصر به فرد</strong> می باشد.</p><p>&nbsp;این بیمارستان برای ۲۰۰ تخت بیمارستانی طراحی شده که قابلیت افزایش نیز دارد. این مرکز شامل اقامتگاه جهت همراهان بیمار ، وجود تالار همایش جهت انجام همایش های پزشکی و غیر پزشکی ، &nbsp;مج</p>",
+   "province": "تهران",
+   "city": "تهران",
+   "address": "تهران ، بزرگراه همت ، بزرگراه شهید خرازی ،بعد از خروجی آزادگان ، خروجی بیمارستان تریتا",
+   "tell": "02147241000",
+   "display_number": "021-47241000         داخلی 1",
+   "email": null,
+   "website": "www.treatahospital.com",
+   "number_of_visits": "729265",
+   "access": [],
+   "social": {
+    "facebook": null,
+    "twitter": null,
+    "instagram": null,
+    "telegram": null,
+    "linkedin": null,
+    "youtube": null,
+    "google_plus": null,
+    "aparat": null
+   },
+   "banner": {
+    "activity": {
+     "activity_name": "open_webview",
+     "type": "url_with_certificate",
+     "url": "https://www.paziresh24.com/consult?isWebView=1?refafname=app-banner-centerprofile"
+    },
+    "image_url": "https://www.paziresh24.com/img/cp_banner.jpg",
+    "is_active": true
+   },
+   "map": {
+    "lat": "35.75766050",
+    "lon": "51.22428930"
+   },
+   "services": [
+    {
+     "id": "1371",
+     "alias_title": "ارتوپدی",
+     "free_price": "0",
+     "doctors": [
+      {
+       "id": "97437ec2-79e1-4d7f-aa1f-dfd90dc8e387",
+       "name": "احمد",
+       "family": "عزیزی",
+       "slug": "دکتر-احمد-عزیزی-2",
+       "specified_field": null,
+       "server_id": "1"
+      },
+      {
+       "id": "1032",
+       "name": "امیرحسین",
+       "family": "مجدی",
+       "slug": "دکتر-امیرحسین-مجدی",
+       "specified_field": null,
+       "server_id": "1"
+      }
+     ]
+    },
+    {
+     "id": "1365",
+     "alias_title": "ارولوژی",
+     "free_price": "0",
+     "doctors": [
+      {
+       "id": "1050",
+       "name": "بهزاد",
+       "family": "نجمی",
+       "slug": "دکتر-بهزاد-نجمی",
+       "specified_field": null,
+       "server_id": "1"
+      },
+      {
+       "id": "e331c7ae-9b65-48e4-8e91-3ce35c1e2c1c",
+       "name": "بهمن",
+       "family": "شیخ امیرانلو",
+       "slug": "دکتر-بهمن-شیخ-امیرانلو-0",
+       "specified_field": null,
+       "server_id": "1"
+      }
+     ]
+    },
+    {
+     "id": "1372",
+     "alias_title": "اطفال و نوزادان",
+     "free_price": "0",
+     "doctors": [
+      {
+       "id": "1042",
+       "name": "امیرابراهیم",
+       "family": "صفرزاده",
+       "slug": "دکتر-امیرابراهیم-صفرزاده",
+       "specified_field": null,
+       "server_id": "1"
+      },
+      {
+       "id": "973f01d7-e7a5-4e6b-943b-d1851fa58ca4",
+       "name": "حوراسا",
+       "family": "طبیبی",
+       "slug": "دکتر-حوراسا-طبیبی-1",
+       "specified_field": null,
+       "server_id": "1"
+      }
+     ]
+    }
+   ],
+   "insurance": [],
+   "gallery": [],
+   "doctors": [
+    {
+     "id": "1027",
+     "name": "فاطمه",
+     "family": "آذرمه",
+     "display_name": "دکتر فاطمه آذرمه",
+     "user_center_id": "890",
+     "slug": "دکتر-فاطمه-آذرمِه",
+     "score": "0",
+     "experience": null,
+     "uc_desk": "زنان و زایمان",
+     "medical_code": "70017",
+     "insurance_list": {
+      "tamin": false,
+      "salamat": false
+     },
+     "image": "/getImage/p24/search-women/noimage.png",
+     "image-sized": [],
+     "specified_field": null,
+     "server_id": "1",
+     "expertises": [
+      {
+       "alias_title": "متخصص زنان و زایمان",
+       "degree": {
+        "id": "7",
+        "name": "متخصص",
+        "icon": null
+       },
+       "expertise": {
+        "id": "153",
+        "name": "زنان و زایمان",
+        "en_slug": "obstetrics-gynecology"
+       },
+       "graduation_date": null,
+       "expertise_groups": [
+        {
+         "id": "1940",
+         "group_id": "23",
+         "expertise_id": "153",
+         "name": "زنان، زایمان و نازایی",
+         "en_slug": "obstetrics-gynecology"
+        }
+       ]
+      }
+     ],
+     "freeturn": 0,
+     "number_of_visits": "156474",
+     "gender": "2",
+     "services": null,
+     "is_foreign": "0"
+    },
+    {
+     "id": "20849",
+     "name": "پیام",
+     "family": "ابوالحسنی",
+     "display_name": "دکتر پیام ابوالحسنی",
+     "user_center_id": "16276",
+     "slug": "دکتر-پیام-ابوالحسنی-0",
+     "score": "0",
+     "experience": null,
+     "uc_desk": null,
+     "medical_code": "79643",
+     "insurance_list": {
+      "tamin": false,
+      "salamat": false
+     },
+     "image": "/getImage/p24/search-men/noimage.png",
+     "image-sized": [],
+     "specified_field": null,
+     "server_id": "1",
+     "expertises": [
+      {
+       "alias_title": "متخصص گوش و حلق و بینی و جراح سر و گردن",
+       "degree": {
+        "id": "7",
+        "name": "متخصص",
+        "icon": null
+       },
+       "expertise": {
+        "id": "160",
+        "name": "گوش و حلق و بینی و جراحی سر و گردن",
+        "en_slug": "ent-head-and-neck-surgery"
+       },
+       "graduation_date": null,
+       "expertise_groups": [
+        {
+         "id": "1868",
+         "group_id": "31",
+         "expertise_id": "160",
+         "name": "گوش، حلق و بینی",
+         "en_slug": "otorhinolaryngology"
+        },
+        {
+         "id": "2324",
+         "group_id": "40",
+         "expertise_id": "160",
+         "name": "کرونا ویروس",
+         "en_slug": "corona-virus"
+        }
+       ]
+      },
+      {
+       "alias_title": "متخصص گوش، گلو، بینی و جراحی سر و گردن",
+       "degree": {
+        "id": "7",
+        "name": "متخصص",
+        "icon": null
+       },
+       "expertise": {
+        "id": "160",
+        "name": "گوش و حلق و بینی و جراحی سر و گردن",
+        "en_slug": "ent-head-and-neck-surgery"
+       },
+       "graduation_date": null,
+       "expertise_groups": [
+        {
+         "id": "1868",
+         "group_id": "31",
+         "expertise_id": "160",
+         "name": "گوش، حلق و بینی",
+         "en_slug": "otorhinolaryngology"
+        },
+        {
+         "id": "2324",
+         "group_id": "40",
+         "expertise_id": "160",
+         "name": "کرونا ویروس",
+         "en_slug": "corona-virus"
+        }
+       ]
+      }
+     ],
+     "freeturn": 0,
+     "number_of_visits": "243232",
+     "gender": "1",
+     "services": null,
+     "is_foreign": "0"
+    },
+    {
+     "id": "6e898ef8-e6d7-409c-b772-12855cba41cd",
+     "name": "زهرا",
+     "family": "اعمرائی",
+     "display_name": "دکتر زهرا اعمرائی",
+     "user_center_id": "c651585b-1a82-11f0-a891-005056ad823b",
+     "slug": "دکتر-زهرا-اعمرائی-0",
+     "score": "0",
+     "experience": null,
+     "uc_desk": null,
+     "medical_code": "153422.",
+     "insurance_list": {
+      "tamin": false,
+      "salamat": false
+     },
+     "image": "/getImage/p24/search-women/33c23b0a6bbc3e17f3c5df4b5fd6c4ae.jpeg",
+     "image-sized": [],
+     "specified_field": null,
+     "server_id": "1",
+     "expertises": [
+      {
+       "alias_title": "،مشاوره اکی عمل، مشاوره قلب پیش از عمل،هولتر فشار ،سنجش مقاومت عروقی،سفتی عروق،چربی خون بالا، کبد چرب، سنکوپ، فشارخون بالا در بارداری ،درد کتف، درد قفسه سینه، گرفتگی عروق، بیماری عروق محیطی ، سکته مغزی، ریتم نامنظم قلب،نارسای",
+       "degree": {
+        "id": "7",
+        "name": "متخصص",
+        "icon": null
+       },
+       "expertise": {
+        "id": "134",
+        "name": "بیماریهای قلب و عروق",
+        "en_slug": "cardiovascular-diseases"
+       },
+       "graduation_date": null,
+       "expertise_groups": [
+        {
+         "id": "1907",
+         "group_id": "29",
+         "expertise_id": "134",
+         "name": "قلب و عروق",
+         "en_slug": "cardiovascular"
+        }
+       ]
+      }
+     ],
+     "freeturn": 0,
+     "number_of_visits": "11580",
+     "gender": "2",
+     "services": null,
+     "is_foreign": "0"
+    },
+    {
+     "id": "52e56539-ae4a-11f0-a8fe-fa163e8a0bb8",
+     "name": "الهه",
+     "family": "افشین",
+     "display_name": "دکتر الهه افشین",
+     "user_center_id": "52f0ac80-ae4a-11f0-a8fe-fa163e8a0bb8",
+     "slug": "دکتر-الهه-افشین-0",
+     "score": "0",
+     "experience": null,
+     "uc_desk": null,
+     "medical_code": "138261",
+     "insurance_list": {
+      "tamin": false,
+      "salamat": false
+     },
+     "image": "/getImage/p24/search-women/noimage.png",
+     "image-sized": [],
+     "specified_field": null,
+     "server_id": "1",
+     "expertises": [
+      {
+       "alias_title": "متخصص بیماریهای قلب و عروق",
+       "degree": {
+        "id": "7",
+        "name": "متخصص",
+        "icon": null
+       },
+       "expertise": {
+        "id": "134",
+        "name": "بیماریهای قلب و عروق",
+        "en_slug": "cardiovascular-diseases"
+       },
+       "graduation_date": null,
+       "expertise_groups": [
+        {
+         "id": "1907",
+         "group_id": "29",
+         "expertise_id": "134",
+         "name": "قلب و عروق",
+         "en_slug": "cardiovascular"
+        }
+       ]
+      },
+      {
+       "alias_title": "متخصص قلب و عروق از مرکز قلب شهید رجایی تهران  | دارای بورد تخصصی  | عضو انجمن قلب اروپا  (ESC)",
+       "degree": {
+        "id": "5",
+        "name": "دکترای",
+        "icon": null
+       },
+       "expertise": {
+        "id": "123",
+        "name": "پزشکی",
+        "en_slug": "medical"
+       },
+       "graduation_date": null,
+       "expertise_groups": [
+        {
+         "id": "2006",
+         "group_id": "11",
+         "expertise_id": "123",
+         "name": "پزشک عمومی",
+         "en_slug": "general-practitioner"
+        }
+       ]
+      }
+     ],
+     "freeturn": 0,
+     "number_of_visits": "6464",
+     "gender": "2",
+     "services": null,
+     "is_foreign": "0"
+    }
+   ],
+   "group_expertises": [],
+   "recently_freeturn_doctors": [],
+   "gexp": {}
+  }
+ }
+}

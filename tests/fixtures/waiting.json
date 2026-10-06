@@ -1,0 +1,35 @@
+{
+ "list": [
+  {
+   "Id": 1079574,
+   "Title": null,
+   "CreatedAt": "2025-12-16 22:03:09+00:00",
+   "UpdatedAt": "2026-10-04 23:30:20+00:00",
+   "created_by": null,
+   "updated_by": null,
+   "slug": "دکتر-زهرا-رجبلی",
+   "center_id": "5532",
+   "avg_waiting_time": 15,
+   "feedback_count": 20
+  },
+  {
+   "Id": 3060940,
+   "Title": null,
+   "CreatedAt": "2026-01-29 21:46:04+00:00",
+   "UpdatedAt": "2026-10-04 23:30:20+00:00",
+   "created_by": null,
+   "updated_by": null,
+   "slug": "دکتر-زهرا-رجبلی",
+   "center_id": "a098df30-b54c-47eb-9a63-21524e6fd7d8",
+   "avg_waiting_time": 15,
+   "feedback_count": 5
+  }
+ ],
+ "pageInfo": {
+  "totalRows": 2,
+  "page": 1,
+  "pageSize": 25,
+  "isFirstPage": true,
+  "isLastPage": true
+ }
+}

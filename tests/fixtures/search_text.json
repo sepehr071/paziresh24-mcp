@@ -1,0 +1,200 @@
+{
+ "search": {
+  "query_id": "ESA578D3E5713ABD",
+  "served_by": "es_adapter",
+  "total": 641,
+  "degraded": false,
+  "is_landing": false,
+  "pagination": {
+   "limit": 3,
+   "page": 1
+  },
+  "result": [
+   {
+    "_id": "doctor_8183cbd6-5413-4f4d-b2c7-be64b0ac87f1_1",
+    "id": "8183cbd6-5413-4f4d-b2c7-be64b0ac87f1",
+    "server_id": 1,
+    "type": "doctor",
+    "title": "هدیه جباری",
+    "prefix": "دکتر",
+    "image": "https://pic.paziresh24.com/api/image/4775150",
+    "view": "5K",
+    "display_expertise": "متخصص بیماریهای قلب و عروق",
+    "satisfaction": 100,
+    "rates_count": 11,
+    "centers": [
+     {
+      "id": "291c1bfe-e8f3-414a-a82d-d6fe081683fb",
+      "status": 1,
+      "user_center_id": "09558bad-168d-4df8-b39d-437a260ca6fc",
+      "server_id": 1,
+      "name": "مطب دکتر هدیه جباری",
+      "display_number": "09909430145",
+      "address": "سعادت آباد، چهارراه سرو، سرو غربی، کوچه نامی، طبقه سوم آزمایشگاه ساره",
+      "province_name": "تهران",
+      "city_name": "تهران",
+      "center_type": 1,
+      "map": {
+       "lon": 51.361214639759,
+       "lat": 35.778615445525
+      },
+      "active_booking": false
+     },
+     {
+      "id": "5532",
+      "status": 1,
+      "user_center_id": "972812db-4af0-49d5-865f-516ad2df8474",
+      "server_id": 1,
+      "name": "ویزیت آنلاین پذیرش24",
+      "display_number": "02125015555",
+      "address": "مرکز ویزیت آنلاین پذیرش24",
+      "province_name": "تهران",
+      "city_name": "تهران",
+      "center_type": 3,
+      "map": {
+       "lat": null,
+       "lon": null
+      },
+      "active_booking": false
+     }
+    ],
+    "display_address": "تهران,سعادت آباد، چهارراه سرو، سرو غربی، کوچه نامی، طبقه سوم آزمایشگاه ساره",
+    "waiting_time": null,
+    "badges": [
+     {
+      "title": "منتخب پذیرش24",
+      "type": "success",
+      "icon": null
+     }
+    ],
+    "is_bulk": false,
+    "consult_active_booking": true,
+    "presence_active_booking": false,
+    "url": "/dr/دکتر-هدیه-جباری-0/",
+    "actions": [
+     {
+      "title": "ویزیت آنلاین",
+      "outline": false,
+      "top_title": "<span>پاسخ: <b>امروز حدود 3 عصر</b></span>",
+      "url": "/factor/v2/دکتر-هدیه-جباری-0/972812db-5afb-427a-9dba-d07aa3fed100"
+     },
+     {
+      "title": "نوبت‌دهی",
+      "outline": false,
+      "top_title": "<span>اولین نوبت: <b>امروز 11 صبح</b></span>",
+      "url": "/dr/دکتر-هدیه-جباری-0/"
+     }
+    ],
+    "experience": null,
+    "position": 1,
+    "has_presciption": false,
+    "insurances": [
+     "تامین اجتماعی"
+    ],
+    "presence_freeturn": 1791271800,
+    "expertises": [
+     {
+      "degree": {
+       "name": "متخصص",
+       "id": 7
+      },
+      "expertise": {
+       "name": "بیماریهای قلب و عروق"
+      },
+      "expertise_groups": [
+       {
+        "name": "قلب و عروق"
+       }
+      ],
+      "alias_title": "متخصص بیماریهای قلب و عروق"
+     }
+    ],
+    "expertise": [
+     "بیماریهای قلب و عروق"
+    ],
+    "consult_services": [
+     {
+      "free_price": 5000000,
+      "id": "972812db-5afb-427a-9dba-d07aa3fed100"
+     }
+    ],
+    "doctor_id": "8183cbd6-5413-4f4d-b2c7-be64b0ac87f1",
+    "number_of_visits": 5765,
+    "slug": "دکتر-هدیه-جباری-0",
+    "available_time_status": 0,
+    "display_name": "هدیه جباری",
+    "center_id": [
+     "291c1bfe-e8f3-414a-a82d-d6fe081683fb",
+     "5532"
+    ],
+    "consult_freeturn": 1791286200,
+    "name": "هدیه",
+    "gender": 2,
+    "rate_info": {
+     "rates_count": 11,
+     "doctor_encounter": 5,
+     "explanation_of_issue": 5,
+     "quality_of_treatment": 5,
+     "waiting_time": 0,
+     "comments_count": 11,
+     "waiting_time_count": 10,
+     "rate": 5,
+     "count_dislike": null,
+     "doctor_encouter": null
+    },
+    "freeturns_info": [
+     {
+      "available_time": "1791145800",
+      "center_id": "291c1bfe-e8f3-414a-a82d-d6fe081683fb",
+      "freeturn": "1791271800"
+     },
+     {
+      "available_time": "1791232200",
+      "center_id": "5532",
+      "freeturn": "1791286200"
+     }
+    ],
+    "star": 5,
+    "university_name": [],
+    "record_type": "doctor",
+    "calculated_rate": 100,
+    "medical_code": "163761",
+    "waiting_time_info": null,
+    "graduation_date": null,
+    "address": null,
+    "keyword_tags": null,
+    "origin_booking": null,
+    "origin_url": null,
+    "schema_aggregateRating": null,
+    "source": null,
+    "status": null,
+    "subtitle": null
+   },
+   {
+    "_id": "center_291c1bfe-e8f3-414a-a82d-d6fe081683fb_1",
+    "id": "291c1bfe-e8f3-414a-a82d-d6fe081683fb",
+    "server_id": 1,
+    "type": "center",
+    "title": "مطب دکتر هدیه جباری",
+    "image": "/getImage/p24/search-hospitalclinic/noimage.png?size=150",
+    "view": 706,
+    "display_address": "|سعادت آباد، چهارراه سرو، سرو غربی، کوچه نامی، طبقه سوم آزمایشگاه ساره",
+    "badges": [],
+    "is_bulk": false,
+    "url": "/center/مطب-دکتر-هدیه-جباری/",
+    "actions": [
+     {
+      "title": "مشاهده پزشکان / نوبت دهی اینترنتی",
+      "outline": true,
+      "top_title": "",
+      "url": "/center/مطب-دکتر-هدیه-جباری/"
+     }
+    ],
+    "position": 2
+   }
+  ]
+ },
+ "selected_filters": {
+  "text": "هدیه جباری"
+ }
+}

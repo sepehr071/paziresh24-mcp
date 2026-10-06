@@ -1,0 +1,30 @@
+{
+ "in_person_availability": {
+  "booking_available": true,
+  "nearest_time_slot": "2026-10-06T11:00:00.000+03:30",
+  "nearest_available_time": "2026-10-05T00:00:00.000+03:30"
+ },
+ "online_visit_availability": {
+  "booking_available": true,
+  "nearest_time_slot": "2026-10-06T15:00:00.000+03:30",
+  "nearest_available_time": "2026-10-06T00:00:00.000+03:30"
+ },
+ "centers": [
+  {
+   "id": "291c1bfe-e8f3-414a-a82d-d6fe081683fb",
+   "availability_status": {
+    "booking_available": true,
+    "nearest_time_slot": "2026-10-06T11:00:00.000+03:30",
+    "nearest_available_time": "2026-10-05T00:00:00.000+03:30"
+   }
+  },
+  {
+   "id": "5532",
+   "availability_status": {
+    "booking_available": true,
+    "nearest_time_slot": "2026-10-06T15:00:00.000+03:30",
+    "nearest_available_time": "2026-10-06T00:00:00.000+03:30"
+   }
+  }
+ ]
+}

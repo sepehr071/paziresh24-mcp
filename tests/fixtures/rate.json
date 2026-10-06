@@ -1,0 +1,15 @@
+{
+ "Id": 400714,
+ "Title": null,
+ "CreatedAt": "2025-12-16 18:46:46+00:00",
+ "UpdatedAt": "2026-10-05 20:03:20+00:00",
+ "doctor_encounter": 4.974926253687316,
+ "explanation_of_issue": 4.963072378138848,
+ "hide_rates": null,
+ "comments_count": 638,
+ "waiting_time": 0.018461538461538463,
+ "count_rates": 679,
+ "doctor_slug": "دکتر-زهرا-رجبلی",
+ "waiting_time_count": 650,
+ "quality_of_treatment": 4.9689807976366325
+}

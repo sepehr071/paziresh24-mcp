@@ -1,0 +1,9 @@
+{
+ "status": 1,
+ "message": "درخواست شما با موفقیت انجام شد",
+ "result": {
+  "redirect": {
+   "statusCode": 404
+  }
+ }
+}

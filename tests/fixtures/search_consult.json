@@ -1,0 +1,352 @@
+{
+ "search": {
+  "query_id": "ESA7A2BDE0BE3A06",
+  "served_by": "es_adapter",
+  "total": 305,
+  "degraded": false,
+  "is_landing": false,
+  "pagination": {
+   "limit": 3,
+   "page": 1
+  },
+  "result": [
+   {
+    "_id": "doctor_ad92bbf0-bddb-4a6e-9312-61b39784a0be_1",
+    "id": "ad92bbf0-bddb-4a6e-9312-61b39784a0be",
+    "server_id": 1,
+    "type": "doctor",
+    "title": "سعيد نوريان",
+    "prefix": "دکتر",
+    "image": "https://pic.paziresh24.com/api/image/8064683",
+    "view": "16K",
+    "display_expertise": "فلوشیپ اینترونشنال کاردیولوژی",
+    "satisfaction": 81,
+    "rates_count": 20,
+    "centers": [
+     {
+      "id": "31a36dda-3f95-495b-ad8e-4b63f784644d",
+      "status": 1,
+      "user_center_id": "c111142f-6759-4210-ac35-5f504951156f",
+      "server_id": 1,
+      "name": "مطب دکتر سعيد نوريان",
+      "display_number": "",
+      "address": null,
+      "province_name": "تهران",
+      "city_name": "تهران",
+      "center_type": 1,
+      "map": {
+       "lat": null,
+       "lon": null
+      },
+      "active_booking": false
+     },
+     {
+      "id": "5532",
+      "status": 1,
+      "user_center_id": "978dc085-e011-48d0-8756-f18183903bff",
+      "server_id": 1,
+      "name": "ویزیت آنلاین پذیرش24",
+      "display_number": "02125015555",
+      "address": "مرکز ویزیت آنلاین پذیرش24",
+      "province_name": "تهران",
+      "city_name": "تهران",
+      "center_type": 3,
+      "map": {
+       "lat": null,
+       "lon": null
+      },
+      "active_booking": false
+     }
+    ],
+    "display_address": "تهران",
+    "badges": [],
+    "is_bulk": false,
+    "price": "80,000 تومان",
+    "consult_active_booking": true,
+    "presence_active_booking": false,
+    "url": "/dr/دکتر-سعيد-نوريان/",
+    "actions": [
+     {
+      "title": "ویزیت آنلاین",
+      "outline": false,
+      "top_title": "<span>پاسخ: <b>امروز حدود 9 صبح</b></span>",
+      "url": "/factor/v2/دکتر-سعيد-نوريان/978dc085-e57c-4252-931c-a952e827daa1"
+     }
+    ],
+    "experience": null,
+    "position": 1,
+    "has_presciption": false,
+    "insurances": [
+     "تامین اجتماعی"
+    ],
+    "expertises": [
+     {
+      "degree": {
+       "name": "فلوشیپ",
+       "id": 13
+      },
+      "expertise": {
+       "name": "اینترونشنال کاردیولوژی"
+      },
+      "expertise_groups": [
+       {
+        "name": "قلب و عروق"
+       }
+      ],
+      "alias_title": "فلوشیپ اقدامات مداخله‌ای قلب و عروق (اینترونشنال کاردیولوژی) بزرگسالان"
+     }
+    ],
+    "expertise": [
+     "اینترونشنال کاردیولوژی"
+    ],
+    "doctor_id": "ad92bbf0-bddb-4a6e-9312-61b39784a0be",
+    "number_of_visits": 16369,
+    "slug": "دکتر-سعيد-نوريان",
+    "available_time_status": 0,
+    "display_name": "سعيد نوريان",
+    "center_id": [
+     "5532",
+     "31a36dda-3f95-495b-ad8e-4b63f784644d"
+    ],
+    "consult_freeturn": 1791264600,
+    "name": "سعيد",
+    "gender": 1,
+    "rate_info": {
+     "rates_count": 20,
+     "doctor_encounter": 4,
+     "explanation_of_issue": 4,
+     "quality_of_treatment": 4.11,
+     "waiting_time": 1.06,
+     "comments_count": 20,
+     "waiting_time_count": 18,
+     "rate": 4.05,
+     "count_dislike": null,
+     "doctor_encouter": null
+    },
+    "freeturns_info": [
+     {
+      "available_time": "1791232200",
+      "center_id": "5532",
+      "freeturn": "1791264600"
+     }
+    ],
+    "star": 4.05,
+    "services": [
+     {
+      "workhours": [],
+      "center_id": "31a36dda-3f95-495b-ad8e-4b63f784644d",
+      "id": "a1505193-9a32-4a6d-a044-37791448115f"
+     },
+     {
+      "workhours": [],
+      "center_id": "5532",
+      "id": "978dc085-e57c-4252-931c-a952e827daa1"
+     }
+    ],
+    "university_name": [],
+    "record_type": "doctor",
+    "medical_code": "136365",
+    "calculated_rate": 81,
+    "presence_freeturn": null,
+    "graduation_date": null,
+    "waiting_time_info": null,
+    "consult_services": [
+     {
+      "free_price": 800000,
+      "id": "978dc085-e57c-4252-931c-a952e827daa1"
+     }
+    ],
+    "address": null,
+    "keyword_tags": null,
+    "origin_booking": null,
+    "origin_url": null,
+    "schema_aggregateRating": null,
+    "source": null,
+    "status": null,
+    "subtitle": null
+   },
+   {
+    "_id": "doctor_9741e96c-6903-4e02-a7af-66b4d002c95c_1",
+    "id": "9741e96c-6903-4e02-a7af-66b4d002c95c",
+    "server_id": 1,
+    "type": "doctor",
+    "title": "آرام حمزه پور",
+    "prefix": "دکتر",
+    "image": "https://pic.paziresh24.com/api/image/18413943",
+    "view": "4K",
+    "display_expertise": "متخصص بیماریهای قلب و عروق, دکترای پزشکی",
+    "satisfaction": null,
+    "rates_count": null,
+    "centers": [
+     {
+      "id": "5532",
+      "status": 1,
+      "user_center_id": "9d716c46-be77-4792-80bd-749a36917ea6",
+      "server_id": 1,
+      "name": "ویزیت آنلاین پذیرش24",
+      "display_number": "02125015555",
+      "address": "مرکز ویزیت آنلاین پذیرش24",
+      "province_name": "تهران",
+      "city_name": "تهران",
+      "center_type": 3,
+      "map": {
+       "lat": null,
+       "lon": null
+      },
+      "active_booking": false
+     },
+     {
+      "id": "9741e96c-7169-41da-99b0-bf2a746a262e",
+      "status": 1,
+      "user_center_id": "9741e96c-8a05-4007-b506-25a19915578d",
+      "server_id": 1,
+      "name": "مطب دکتر آرام حمزه پور",
+      "display_number": "09185393033|087-34548718",
+      "address": "کردستان, مریوان, خیابان سید قطب روبروی کوچه گمرک جنب داروخانه دکتر مینویی مطب دکتر آرام حمزه پور طبقه اول",
+      "province_name": "کردستان",
+      "city_name": "مریوان",
+      "center_type": 1,
+      "map": {
+       "lon": 46.178435889323,
+       "lat": 35.52212255261
+      },
+      "active_booking": false
+     }
+    ],
+    "display_address": "مریوان,کردستان, مریوان, خیابان سید قطب روبروی کوچه گمرک جنب داروخانه دکتر مینویی مطب دکتر آرام حمزه پور طبقه اول",
+    "badges": [],
+    "is_bulk": false,
+    "price": "100,000 تومان",
+    "consult_active_booking": true,
+    "presence_active_booking": false,
+    "url": "/dr/دکتر-آرام-حمزه-پور-1/",
+    "actions": [
+     {
+      "title": "ویزیت آنلاین",
+      "outline": false,
+      "top_title": "<span>پاسخ: <b>امروز حدود 11 صبح</b></span>",
+      "url": "/factor/v2/دکتر-آرام-حمزه-پور-1/9d716c46-c232-4faa-9110-e1e5dfeec81f"
+     }
+    ],
+    "experience": null,
+    "position": 2,
+    "has_presciption": false,
+    "insurances": [
+     "تامین اجتماعی",
+     "سلامت (خدمات درمانی)"
+    ],
+    "expertises": [
+     {
+      "degree": {
+       "name": "متخصص",
+       "id": 7
+      },
+      "expertise": {
+       "name": "بیماریهای قلب و عروق"
+      },
+      "expertise_groups": [
+       {
+        "name": "قلب و عروق"
+       }
+      ],
+      "alias_title": "قلب و عروق"
+     },
+     {
+      "degree": {
+       "name": "دکترای",
+       "id": 5
+      },
+      "expertise": {
+       "name": "پزشکی"
+      },
+      "expertise_groups": [
+       {
+        "name": "پزشک عمومی"
+       }
+      ],
+      "alias_title": "متخصص قلب و عروق"
+     }
+    ],
+    "expertise": [
+     "پزشکی",
+     "بیماریهای قلب و عروق"
+    ],
+    "consult_services": [
+     {
+      "free_price": 1000000,
+      "id": "9d716c46-c232-4faa-9110-e1e5dfeec81f"
+     }
+    ],
+    "doctor_id": "9741e96c-6903-4e02-a7af-66b4d002c95c",
+    "number_of_visits": 4180,
+    "slug": "دکتر-آرام-حمزه-پور-1",
+    "available_time_status": 2,
+    "display_name": "آرام حمزه پور",
+    "center_id": [
+     "9741e96c-7169-41da-99b0-bf2a746a262e",
+     "5532"
+    ],
+    "consult_freeturn": 1791271800,
+    "name": "آرام",
+    "gender": 1,
+    "rate_info": {
+     "rates_count": null,
+     "comments_count": null,
+     "waiting_time_count": null,
+     "rate": 0,
+     "quality_of_treatment": null,
+     "waiting_time": null,
+     "doctor_encounter": null,
+     "explanation_of_issue": null,
+     "count_dislike": null,
+     "doctor_encouter": null
+    },
+    "freeturns_info": [
+     {
+      "available_time": "1791232200",
+      "center_id": "5532",
+      "freeturn": "1791271800"
+     },
+     {
+      "available_time": "1791232200",
+      "center_id": "9741e96c-7169-41da-99b0-bf2a746a262e",
+      "freeturn": "1791289800"
+     }
+    ],
+    "star": 0,
+    "services": [
+     {
+      "workhours": [],
+      "center_id": "9741e96c-7169-41da-99b0-bf2a746a262e",
+      "id": "9741e96c-ef07-4453-a41f-7a0e08bf4156"
+     },
+     {
+      "workhours": [],
+      "center_id": "5532",
+      "id": "9d716c46-c232-4faa-9110-e1e5dfeec81f"
+     }
+    ],
+    "university_name": [],
+    "record_type": "doctor",
+    "medical_code": "144249",
+    "calculated_rate": null,
+    "graduation_date": null,
+    "waiting_time_info": null,
+    "presence_freeturn": 1791289800,
+    "address": null,
+    "keyword_tags": null,
+    "origin_booking": null,
+    "origin_url": null,
+    "schema_aggregateRating": null,
+    "source": null,
+    "status": null,
+    "subtitle": null
+   }
+  ]
+ },
+ "selected_filters": {
+  "turn_type": "consult",
+  "category": "cardiovascular",
+  "city": "tehran"
+ }
+}

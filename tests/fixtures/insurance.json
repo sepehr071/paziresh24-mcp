@@ -1,0 +1,26 @@
+{
+ "base": [
+  {
+   "name": "تامین اجتماعی",
+   "key": "tamin",
+   "icon": "https://bimehnama.s3.ir-thr-at1.arvanstorage.ir/base%2Ftamin-insurance.svg"
+  },
+  {
+   "name": "سلامت ایرانیان",
+   "key": "salamat",
+   "icon": "https://bimehnama.s3.ir-thr-at1.arvanstorage.ir/base%2Fsalamat-insurance.svg"
+  },
+  {
+   "name": "خدمات درمانی",
+   "key": "khadamat-darmani",
+   "icon": "https://bimehnama.s3.ir-thr-at1.arvanstorage.ir/base%2Fkhadamat-darmani-insurance.svg"
+  },
+  {
+   "name": "نیروهای مسلح",
+   "key": "niruhaye-mosalah",
+   "icon": "https://bimehnama.s3.ir-thr-at1.arvanstorage.ir/base%2Fniruhaye-mosalah-insurance.svg"
+  }
+ ],
+ "supplement": [],
+ "updated_at": "2026-09-21T10:33:36.643Z"
+}

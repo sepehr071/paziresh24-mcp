@@ -1,0 +1,32 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.sepehr071/paziresh24-mcp",
+  "title": "Paziresh24",
+  "description": "Unofficial read-only Paziresh24: find Iranian doctors, profiles, prices, reviews and free slots.",
+  "repository": {
+    "url": "https://github.com/sepehr071/paziresh24-mcp",
+    "source": "github"
+  },
+  "websiteUrl": "https://github.com/sepehr071/paziresh24-mcp",
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "paziresh24-mcp",
+      "version": "0.1.0",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "PAZIRESH24_MCP_PROXY",
+          "description": "Optional HTTP proxy URL for every request. System proxy settings are ignored.",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,443 @@
+{
+ "status": "SUCCESS",
+ "message": "درخواست شما با موفقیت پردازش شد",
+ "data": {
+  "id": "8183cbd6-5413-4f4d-b2c7-be64b0ac87f1",
+  "slug": "دکتر-هدیه-جباری-0",
+  "name": "هدیه",
+  "family": "جباری",
+  "experience": null,
+  "gender": 2,
+  "desk": null,
+  "biography": "<p>دارای بورد تخصصی از دانشگاه علوم پزشکی شهید بهشتی،<br>یک درصد برتر دانشجویان پزشکی کشور،<br>رتبه اول آزمون صلاحیت بالینی،<br>تقدیر شده در دومین کنفرانس تجلیل از اساتید پزشکی کشور.</p><p>پاسخ به کلیه سوالات قلب و عروق(درد قفسه سینه،تنگی نفس،سنکوپ،تنگی عروق قلبی،بیماریهای دریچه ای،تنظیم دوز وارفارین،درمان بیماری فشار خون،آریتمی،نارسایی قلبی،پیشگیری از بیماریهای قلبی عروقی،آمبولی ریه،درمان افزایش چربی خون،تفسیر نوار قلب،اکوکاردیوگرافی،آنژیوگرافی،تست ورزش،هولتر فشار خون،هولتر نوار قلب،سی تی آنژیوگرافی،اسکن هسته ای قلب و ...)</p>",
+  "awards": null,
+  "scientific": null,
+  "hashtag": null,
+  "server_id": 1,
+  "number_of_visits": 5772,
+  "expertises": [
+   {
+    "id": "9721fdde-1be4-450e-9ed1-3413874f989f",
+    "alias_title": "متخصص بیماریهای قلب و عروق",
+    "graduation_date": null,
+    "expertise": {
+     "id": 134,
+     "name": "بیماریهای قلب و عروق",
+     "slug": "cardiovascular-diseases"
+    },
+    "degree": {
+     "id": 7,
+     "name": "متخصص"
+    },
+    "groups": null,
+    "expertise_groups": [
+     {
+      "id": 29,
+      "name": "قلب و عروق",
+      "en_slug": "cardiovascular",
+      "group_id": 29
+     }
+    ]
+   }
+  ],
+  "group_expertises": [
+   {
+    "id": 29,
+    "name": "قلب و عروق",
+    "en_slug": "cardiovascular",
+    "icon": null
+   }
+  ],
+  "centers": [
+   {
+    "id": "291c1bfe-e8f3-414a-a82d-d6fe081683fb",
+    "freeturn": 1791271800,
+    "freeturn_text": "امروز 11:00",
+    "freeturns_info": [
+     {
+      "service_id": "1a4a8ec2-fdf9-436e-a32b-8fc4485f609c",
+      "book_type_id": 7,
+      "freeturn": 1791271800,
+      "available_time": 1791145800,
+      "availalbe_time_text": null,
+      "expire_time": 1791241895,
+      "status_code": null
+     }
+    ],
+    "is_center": "unknown",
+    "status": 1,
+    "center_type": 1,
+    "center_type_name": "مطب",
+    "user_center_id": "09558bad-168d-4df8-b39d-437a260ca6fc",
+    "server_id": 1,
+    "slug": "دکتر-هدیه-جباری-0",
+    "url": "/دکتر-هدیه-جباری-0",
+    "name": "مطب دکتر هدیه جباری",
+    "map": {
+     "lat": 35.778615445525,
+     "lon": 51.361214639759
+    },
+    "image": "/getImage/p24/search-hospitalclinic/noimage.png",
+    "tell": "0990000xxxx",
+    "tell_array": [
+     "0990000xxxx"
+    ],
+    "display_number": "0990000xxxx",
+    "display_number_array": [
+     "0990000xxxx"
+    ],
+    "description": null,
+    "description_raw": null,
+    "access": [],
+    "province": "تهران",
+    "city": "تهران",
+    "city_en_slug": "tehran",
+    "address": "سعادت آباد، چهارراه سرو، سرو غربی، کوچه نامی، طبقه سوم آزمایشگاه ساره",
+    "settings": {
+     "booking_enable_insurance": "0",
+     "booking_new_turn_suggestion_type": "normal",
+     "booking_paging_from_clinic": null
+    },
+    "gallery": [
+     {
+      "id": "a00cb54a-7f25-470f-b252-8fc37873c8c8",
+      "title": null,
+      "desk": null,
+      "image": "/getImage/p24/7f623c714fe6d76e20ca757fa4af021c.jpg"
+     }
+    ],
+    "services": [
+     {
+      "is_default": 1,
+      "user_center_id": "09558bad-168d-4df8-b39d-437a260ca6fc",
+      "can_request": 0,
+      "request_desc": null,
+      "terms_and_conditions": null,
+      "duration": "00:20:00",
+      "can_booking": 1,
+      "id": "1a4a8ec2-fdf9-436e-a32b-8fc4485f609c",
+      "alias_title": "ویزیت",
+      "free_price": 0,
+      "desk": null,
+      "service_type_id": 1,
+      "service_length": null,
+      "hours_of_work": [
+       {
+        "id": "a2d949dc-c5ea-4e3b-83a3-73daf0508ba2",
+        "day": 6,
+        "from": "15:00:00",
+        "to": "19:40:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       },
+       {
+        "id": "a2d949dd-4e9d-4b22-aef7-0d28dbe823b4",
+        "day": 7,
+        "from": "15:00:00",
+        "to": "19:40:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       },
+       {
+        "id": "a2d949dd-f23b-40f5-8be3-6d52b0977603",
+        "day": 1,
+        "from": "15:00:00",
+        "to": "19:40:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       },
+       {
+        "id": "a2d949de-9725-4eaf-b3e3-4d42a93ccb16",
+        "day": 3,
+        "from": "11:00:00",
+        "to": "15:20:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       },
+       {
+        "id": "a2d949df-40e9-4b68-9b84-3c00654f6d06",
+        "day": 2,
+        "from": "11:00:00",
+        "to": "15:20:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       }
+      ]
+     }
+    ],
+    "insurances": [],
+    "is_only_in_app": {
+     "status": false,
+     "message": ""
+    },
+    "user_center_desk": null,
+    "user_center_desk_raw": null,
+    "is_active": true
+   },
+   {
+    "id": "5532",
+    "freeturn": 1791286200,
+    "freeturn_text": "امروز 15:00",
+    "freeturns_info": [
+     {
+      "service_id": "972812db-5afb-427a-9dba-d07aa3fed100",
+      "book_type_id": 7,
+      "freeturn": 1791286200,
+      "available_time": 1791232200,
+      "availalbe_time_text": null,
+      "expire_time": 1791236847,
+      "status_code": null
+     }
+    ],
+    "is_center": "unknown",
+    "status": 1,
+    "center_type": 3,
+    "center_type_name": "کلینیک",
+    "user_center_id": "972812db-4af0-49d5-865f-516ad2df8474",
+    "server_id": 1,
+    "slug": "consult",
+    "url": "/consult",
+    "name": "ویزیت آنلاین پذیرش24",
+    "map": {
+     "lat": 35.730224,
+     "lon": 51.358404
+    },
+    "image": "/getImage/p24/search-hospitalclinic/3f1c529bb4e42ed531950614f8ca2296.jpg",
+    "tell": "02125015555",
+    "tell_array": [
+     "021-25015555"
+    ],
+    "display_number": "02125015555",
+    "display_number_array": [
+     "021-25015555"
+    ],
+    "description": null,
+    "description_raw": null,
+    "access": [],
+    "province": "تهران",
+    "city": "تهران",
+    "city_en_slug": "tehran",
+    "address": "مرکز ویزیت آنلاین پذیرش24",
+    "settings": {
+     "booking_enable_insurance": "0",
+     "booking_new_turn_suggestion_type": "normal",
+     "booking_paging_from_clinic": null
+    },
+    "gallery": [],
+    "services": [
+     {
+      "is_default": 1,
+      "user_center_id": "972812db-4af0-49d5-865f-516ad2df8474",
+      "can_request": 0,
+      "request_desc": null,
+      "terms_and_conditions": null,
+      "duration": "00:10:00",
+      "can_booking": 1,
+      "id": "972812db-5afb-427a-9dba-d07aa3fed100",
+      "alias_title": "دکتر هدیه جباری - واتساپ",
+      "free_price": 5000000,
+      "desk": null,
+      "service_type_id": 8,
+      "service_length": null,
+      "hours_of_work": [
+       {
+        "id": "9fb0f5a5-0a4c-4ce8-a6eb-36cc38fe159f",
+        "day": 6,
+        "from": "15:00:00",
+        "to": "22:00:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       },
+       {
+        "id": "9fb0f5a5-354e-4d27-b563-2b977f0d908f",
+        "day": 7,
+        "from": "15:00:00",
+        "to": "22:00:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       },
+       {
+        "id": "9fb0f5a5-5811-4f67-86d6-734c0886f093",
+        "day": 1,
+        "from": "15:00:00",
+        "to": "22:00:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       },
+       {
+        "id": "9fb0f5a5-7aea-455f-be3d-ba1246bbb502",
+        "day": 2,
+        "from": "15:00:00",
+        "to": "22:00:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       },
+       {
+        "id": "9fb0f5a5-9e31-4fea-ba33-8527b1c7f2f1",
+        "day": 3,
+        "from": "15:00:00",
+        "to": "22:00:00",
+        "from_date": null,
+        "to_date": null,
+        "server_id": 1,
+        "types": [
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
+        ]
+       }
+      ]
+     }
+    ],
+    "insurances": [],
+    "is_only_in_app": {
+     "status": false,
+     "message": ""
+    },
+    "user_center_desk": null,
+    "user_center_desk_raw": null,
+    "is_active": true
+   }
+  ],
+  "city_en_slug": "tehran",
+  "medical_code": "163761",
+  "aparat_video_code": null,
+  "followConsultBoosk": 0,
+  "insert_at_age": "4 سال و 5 ماه",
+  "image": "/getImage/p24/search-women/09a0254a0c15b407e85c16452bb4595f.jpg",
+  "display_name": "هدیه جباری",
+  "similar_links": [],
+  "consult_active_booking": true,
+  "should_recommend_other_doctors": false,
+  "online_visit_channel_types": [
+   "whatsapp",
+   "igap_number",
+   "secure_call"
+  ],
+  "symptomes": []
+ }
+}

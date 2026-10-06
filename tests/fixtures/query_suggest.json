@@ -1,0 +1,43 @@
+{
+ "statusType": "SUCCESS",
+ "details": "The process was successful",
+ "entity": {
+  "topQuerySuggestions": [
+   "قلب و عروق",
+   "قلب عروق",
+   "قلب الزهرا",
+   "قلب کودکان",
+   "قلب اطفال",
+   "قلب کودکان اکو قلب"
+  ],
+  "topQuerySuggestionsIncludeDocCount": [
+   {
+    "query": "قلب و عروق",
+    "docCount": 0
+   },
+   {
+    "query": "قلب عروق",
+    "docCount": 0
+   },
+   {
+    "query": "قلب الزهرا",
+    "docCount": 0
+   },
+   {
+    "query": "قلب کودکان",
+    "docCount": 0
+   },
+   {
+    "query": "قلب اطفال",
+    "docCount": 0
+   },
+   {
+    "query": "قلب کودکان اکو قلب",
+    "docCount": 0
+   }
+  ],
+  "topQuerySuggestionsIncludeCategory": [],
+  "searchTime": 99
+ },
+ "path": "/api/v2/qs/index/slim_clinic_query_su"
+}

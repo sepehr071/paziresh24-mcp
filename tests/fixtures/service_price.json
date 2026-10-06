@@ -1,0 +1,8 @@
+{
+ "result": {
+  "service_price": 5000000,
+  "vat": 150000,
+  "payable_cost": 5150000,
+  "currency": "ريال"
+ }
+}

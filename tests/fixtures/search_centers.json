@@ -1,0 +1,63 @@
+{
+ "search": {
+  "query_id": "ESABFF607EA9DA66",
+  "served_by": "es_adapter",
+  "total": 7689,
+  "degraded": false,
+  "is_landing": false,
+  "pagination": {
+   "limit": 3,
+   "page": 1
+  },
+  "result": [
+   {
+    "_id": "center_191_11",
+    "id": "191",
+    "server_id": 11,
+    "type": "center",
+    "title": "بیمارستان شهید هاشمی نژاد تهران",
+    "image": "/getImage/p24/search-hospitalclinic/426ac06fe3c8b6b225773590c6e2ab63.jpg?size=150",
+    "view": "1051K",
+    "display_address": "|خیابان ولی عصر (عج)، بالاتر از میدان ونک، کوچه شهید والی نژاد",
+    "badges": [],
+    "is_bulk": false,
+    "url": "/center/بیمارستان-فوق-تخصصی-شهید-هاشمی-نژاد-تهران/",
+    "actions": [
+     {
+      "title": "مشاهده پزشکان / نوبت دهی اینترنتی",
+      "outline": true,
+      "top_title": "",
+      "url": "/center/بیمارستان-فوق-تخصصی-شهید-هاشمی-نژاد-تهران/"
+     }
+    ],
+    "position": 1
+   },
+   {
+    "_id": "center_204_1",
+    "id": "204",
+    "server_id": 1,
+    "type": "center",
+    "title": "بیمارستان تخصصی و فوق تخصصی تریتا",
+    "image": "/getImage/p24/search-hospitalclinic/c0c22afaa099ec2ee67564c95a1052d8.jpg?size=150",
+    "view": "728K",
+    "display_address": "|تهران ، بزرگراه همت ، بزرگراه شهید خرازی ،بعد از خروجی آزادگان ، خروجی بیمارستان تریتا",
+    "badges": [],
+    "is_bulk": false,
+    "url": "/center/بیمارستان-تخصصی-و-فوق-تخصصی-تریتا/",
+    "actions": [
+     {
+      "title": "مشاهده پزشکان / نوبت دهی اینترنتی",
+      "outline": true,
+      "top_title": "",
+      "url": "/center/بیمارستان-تخصصی-و-فوق-تخصصی-تریتا/"
+     }
+    ],
+    "position": 2
+   }
+  ]
+ },
+ "selected_filters": {
+  "result_type": "فقط کلینیک‌ها و بیمارستان‌ها",
+  "city": "tehran"
+ }
+}
