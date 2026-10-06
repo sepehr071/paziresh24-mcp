@@ -190,7 +190,8 @@ All 12 tools are annotated `readOnlyHint: true` and return compact structured JS
 - **Insurance:** search cards list accepted insurance names, but there is no insurance filter. `insurances: null` in `pz_doctor` means no data, not "no insurance".
 - **Centers with booking off** stay in `pz_doctor` with `booking_off: true` (call their phone); `booking_opens` means the booking period has ended and new slots open at that time. Search cards give the first free time per center as well as the doctor's earliest overall.
 - **Booking is not possible here.** Booking needs an SMS login, so the agent gives you the doctor's profile URL. Free slots are listed, never held.
-- Search results can include sponsored doctors; `sort="earliest"` drops doctors without a free slot.
+- `sort="earliest"` drops doctors without a free slot. The order follows the site's search API; the sponsored cards on the website were not seen in it.
+- **Checked against the website:** on 2026-10-06 every tool's output was compared with the live paziresh24.com pages (names, prices, first free times, review order, search totals). Free days and slots were compared only where the site shows them without holding a slot.
 
 ## FAQ
 
