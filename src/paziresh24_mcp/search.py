@@ -151,7 +151,7 @@ async def pz_search_doctors(
 ) -> dict[str, Any]:
     """Search Paziresh24 doctors (or hospitals and clinics) by city, specialty, name, online visit, gender, degree, with sorting and paging.
 
-    Each doctor card has the slug, profile URL, rating, accepted insurance names, first free in-person
+    Each doctor card has the slug, profile URL, photo (`image`), gender, rating, accepted insurance names, first free in-person
     (earliest at any center, plus `first_free` per center) and online slots, the online visit price in Toman
     (`online_visit` only when the doctor offers one), and the center/service ids needed for slot tools
     (a null service_id comes from pz_doctor). There is no insurance filter: check `insurances` yourself. Next: pz_doctor for the full profile,
@@ -321,6 +321,7 @@ def _card(r: dict[str, Any]) -> dict[str, Any]:
         "url": doctor_url(slug) if slug else None,
         "specialty": r.get("display_expertise"),
         "gender": {1: "male", 2: "female"}.get(r.get("gender")),
+        "image": _image(r.get("image")),
         "rating": round(rate["rate"], 2) if rate.get("rate") else None,
         "ratings_count": rate.get("rates_count") or r.get("rates_count") or 0,
         "satisfaction_pct": r.get("satisfaction"),
@@ -344,6 +345,13 @@ def _card(r: dict[str, Any]) -> dict[str, Any]:
             "service_id": consult.get("id") or service_of.get(ONLINE_CENTER),
         }
     return card
+
+
+def _image(src: Any) -> str | None:
+    """Search photo: 'https://pic.paziresh24.com/api/image/<id>' (a real photo even where the profile says noimage)."""
+    if not isinstance(src, str) or not src or "noimage" in src:
+        return None
+    return src if src.startswith("https://") else f"{CDN}{src}" if src.startswith("/") else None
 
 
 def _menu_slug(link: Any) -> str | None:

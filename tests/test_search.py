@@ -61,6 +61,7 @@ async def test_pz_search_doctors_online_cheapest(client, api):
     assert d["slug"] == "دکتر-سعيد-نوريان" and d["url"] == "https://www.paziresh24.com/dr/دکتر-سعيد-نوريان/"
     assert d["name"] == "دکتر سعيد نوريان" and d["gender"] == "male" and d["rating"] == 4.05
     assert d["insurances"] == ["تامین اجتماعی"]
+    assert d["image"] == "https://pic.paziresh24.com/api/image/8064683"
     assert d["online_visit"] == {
         "bookable": True,
         "price_toman": 80000,  # free_price 800000 Rial
