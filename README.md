@@ -187,6 +187,7 @@ All 12 tools are annotated `readOnlyHint: true` and return compact structured JS
 - **In-person office visits usually show price 0**: they are paid at the office and the fee is not published. Online visits have a real fee; `pz_visit_price` adds the VAT (3% in tests).
 - **Times are Tehran local** (`HH:MM`), dates Gregorian `YYYY-MM-DD` (1405-07-18 = 2026-10-10).
 - **Online visits** live in Paziresh24's virtual center `5532` (phone call or messenger such as WhatsApp; see `channels`).
+- **Search cards** carry the doctor's `gender` and photo (`image`, from pic.paziresh24.com; a real photo even where the profile has none).
 - **Insurance:** search cards list accepted insurance names, but there is no insurance filter. `insurances: null` in `pz_doctor` means no data, not "no insurance".
 - **Centers with booking off** stay in `pz_doctor` with `booking_off: true` (call their phone); `booking_opens` means the booking period has ended and new slots open at that time. Search cards give the first free time per center as well as the doctor's earliest overall.
 - **Booking is not possible here.** Booking needs an SMS login, so the agent gives you the doctor's profile URL. Free slots are listed, never held.
