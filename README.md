@@ -2,11 +2,11 @@
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/sepehr071/paziresh24-mcp/main/.github/banner.png" alt="paziresh24-mcp: let your AI agent find a doctor and a free appointment on Paziresh24" width="100%">
+<img src="https://raw.githubusercontent.com/sepehr071/paziresh24-mcp/main/.github/banner.png" alt="paziresh24-mcp: unofficial Paziresh24 MCP server for Claude, Cursor and Copilot" width="100%">
 
-# 🩺 paziresh24-mcp
+# 🩺 paziresh24-mcp: Paziresh24 MCP server for AI agents
 
-**Let your AI agent find the right doctor on Paziresh24.**<br>
+**Unofficial, read-only MCP server that lets your AI agent find the right Iranian doctor on Paziresh24 (پذیرش۲۴).**<br>
 Search doctors by specialty, city, name and online visit, read profiles, prices, insurances and patient reviews,<br>
 and see the free appointment times, all from Claude, Cursor or Copilot.
 
@@ -24,6 +24,19 @@ and see the free appointment times, all from Claude, Cursor or Copilot.
 </div>
 
 ---
+
+## For AI agents
+
+- **What:** Unofficial MCP server for Paziresh24 (پذیرش۲۴, paziresh24.com), the Iranian doctor appointment site. Queries in Persian or English; prices in Toman.
+- **Install:** `claude mcp add paziresh24 -- uvx paziresh24-mcp` (stdio, needs [uv](https://docs.astral.sh/uv/getting-started/installation/) and Python 3.10+).
+- **Auth:** none. Optional `PAZIRESH24_MCP_PROXY` sets an HTTP proxy for every request.
+- **Access:** read-only. It cannot log in, hold a slot, book, pay or post a review; give the user the doctor's profile `url` to book.
+- **Tools:** 12, all prefixed `pz_`. Start with `pz_suggest` (words to city and specialty slugs), `pz_search_doctors`, `pz_doctor`, `pz_free_slots`, `pz_visit_price`.
+- **Typical sequence:** `pz_suggest` -> `pz_search_doctors` -> `pz_doctor` -> `pz_first_available` or `pz_free_slots` -> `pz_visit_price`.
+- **Use when:** the user wants to find a doctor, compare ratings, insurance and online visit fees, or see free appointment times in Iran.
+- **Do not use when:** the user wants to actually book or pay, or needs medical advice.
+- **Output:** compact JSON. Prices in Toman, dates Gregorian `YYYY-MM-DD`, times Tehran local `HH:MM`. Doctors are identified by their Persian slug; slot and price tools take `center_id`, `user_center_id` and `service_id` from `pz_doctor` (online visits use center `5532`).
+- **Machine-readable:** [server.json](https://github.com/sepehr071/paziresh24-mcp/blob/main/server.json), and the catalog of all Iranian MCP servers [awesome-iran-mcp](https://github.com/sepehr071/awesome-iran-mcp) (`TOOLS.md`, `servers.json`, `llms.txt`).
 
 ## Why
 
@@ -197,6 +210,27 @@ All 12 tools are annotated `readOnlyHint: true` and return compact structured JS
 ## FAQ
 
 <details>
+<summary><b>Is there a Paziresh24 API or MCP server for AI agents?</b></summary>
+
+Yes: this unofficial MCP server wraps the public endpoints the Paziresh24 website itself uses, so Claude, Cursor
+or Copilot can search doctors and read free times and prices.
+</details>
+
+<details>
+<summary><b>How do I use Paziresh24 with Claude, Cursor or Copilot?</b></summary>
+
+Add the server with `claude mcp add paziresh24 -- uvx paziresh24-mcp` (or use the Cursor and VS Code buttons above),
+then ask in Persian or English, for example "a cardiologist in Tehran with an online visit today".
+</details>
+
+<details>
+<summary><b>Is it official, safe and free?</b></summary>
+
+It is unofficial, open source (MIT) and free. It is read-only, needs no account or API key, and runs on your
+machine without sending data to any other server.
+</details>
+
+<details>
 <summary><b>Can it book an appointment for me?</b></summary>
 
 No, and that's deliberate. It never calls login, slot-hold, booking, payment or review endpoints (a test fails if
@@ -237,12 +271,14 @@ npx @modelcontextprotocol/inspector uvx paziresh24-mcp
 |---|---|---|
 | `PAZIRESH24_MCP_PROXY` | unset | HTTP proxy for every request, e.g. `http://user:pass@host:port` |
 
-## فارسی
+<a id="فارسی"></a>
+
+## فارسی: سرور MCP پذیرش۲۴
 
 <div dir="rtl">
 
-**paziresh24-mcp** به دستیار هوش مصنوعی شما (Claude، Cursor، Copilot و ...) اجازه می&zwnj;دهد در پذیرش۲۴ پزشک
-پیدا کند: جستجو بر اساس تخصص، شهر، نام و ویزیت آنلاین، خواندن پروفایل، بیمه&zwnj;ها، قیمت و نظرات بیماران، و دیدن
+**paziresh24-mcp** یک سرور MCP غیررسمی برای پذیرش۲۴ است که به دستیار هوش مصنوعی شما (Claude، Cursor، Copilot و ...)
+اجازه می&zwnj;دهد در میان پزشکان ایران پزشک پیدا کند: جستجو بر اساس تخصص، شهر، نام و ویزیت آنلاین، خواندن پروفایل، بیمه&zwnj;ها، قیمت و نظرات بیماران، و دیدن
 زمان&zwnj;های خالی نوبت.
 
 - فقط خواندنی است: وارد حساب نمی&zwnj;شود، نوبت نگه نمی&zwnj;دارد، نوبت ثبت نمی&zwnj;کند و پرداخت نمی&zwnj;کند.
@@ -281,10 +317,17 @@ fixes for API changes.
 Releases: bump the version in `pyproject.toml` and `server.json`, then push a `v*` tag. GitHub Actions tests,
 publishes to PyPI and the [MCP Registry](https://registry.modelcontextprotocol.io), and creates the GitHub Release.
 
+## Related servers
+
+- [Doctoreto MCP server](https://github.com/sepehr071/doctoreto-mcp) for doctor visit fees, free times, clinics and labs
+- All Iranian MCP servers: [awesome-iran-mcp](https://github.com/sepehr071/awesome-iran-mcp)
+
 ## Disclaimer
 
 Unofficial and not affiliated with or endorsed by Paziresh24. It uses the public endpoints of the paziresh24.com
 website, which can change without notice. It is not medical advice. Please keep request rates reasonable.
+
+If this saves you clicks, a star helps others find it.
 
 ## License
 
