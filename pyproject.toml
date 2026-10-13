@@ -1,11 +1,11 @@
 [project]
 name = "paziresh24-mcp"
-version = "0.2.1"
+version = "0.2.2"
 description = "Unofficial read-only MCP server for Paziresh24: find doctors, read profiles, prices and reviews, and see free appointment slots."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
-authors = [{ name = "Sepehr", email = "sepehr@nextofx.com" }]
+authors = [{ name = "Sepehr Radmard", email = "sepehrr80@gmail.com" }]
 requires-python = ">=3.10"
 keywords = ["mcp", "model-context-protocol", "paziresh24", "iran", "doctor", "appointment", "healthcare", "online-visit"]
 classifiers = [
