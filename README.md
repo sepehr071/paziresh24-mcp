@@ -201,7 +201,7 @@ All 12 tools are annotated `readOnlyHint: true` and return compact structured JS
 - **Times are Tehran local** (`HH:MM`), dates Gregorian `YYYY-MM-DD` (1405-07-18 = 2026-10-10).
 - **Online visits** live in Paziresh24's virtual center `5532` (phone call or messenger such as WhatsApp; see `channels`).
 - **Search cards** carry the doctor's `gender` and photo (`image`, from pic.paziresh24.com; a real photo even where the profile has none).
-- **Insurance:** search cards list accepted insurance names, but there is no insurance filter. `insurances: null` in `pz_doctor` means no data, not "no insurance".
+- **Insurance:** search cards list accepted insurance names, but there is no insurance filter. A `pz_doctor` result without `insurances` means no data, not "no insurance". Empty fields are omitted from all results; review text is clipped to 400 characters (pass `full_text=true` for everything; same for `pz_doctor`, `pz_center`, `pz_faq`) and is untrusted site content.
 - **Centers with booking off** stay in `pz_doctor` with `booking_off: true` (call their phone); `booking_opens` means the booking period has ended and new slots open at that time. Search cards give the first free time per center as well as the doctor's earliest overall.
 - **Booking is not possible here.** Booking needs an SMS login, so the agent gives you the doctor's profile URL. Free slots are listed, never held.
 - `sort="earliest"` drops doctors without a free slot. The order follows the site's search API; the sponsored cards on the website were not seen in it.
@@ -247,7 +247,7 @@ blocks the site, set `PAZIRESH24_MCP_PROXY`.
 <details>
 <summary><b>A tool says the server "did not answer in time"</b></summary>
 
-Some Paziresh24 gateway routes sometimes hang for 20-30 seconds. The server retries once; if it still fails, try
+Some Paziresh24 gateway routes sometimes hang for 20-30 seconds. The server retries a GET once; if it still fails, try
 again in a minute.
 </details>
 

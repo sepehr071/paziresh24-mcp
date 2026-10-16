@@ -35,7 +35,7 @@ Slug = Annotated[
     Field(
         min_length=3,
         max_length=400,
-        description="Doctor slug from pz_search_doctors (Persian, e.g. 'دکتر-هدیه-جباری-0') or the doctor's paziresh24.com profile URL.",
+        description="Doctor slug (Persian, e.g. 'دکتر-هدیه-جباری-0') or profile URL.",
     ),
 ]
 
@@ -47,15 +47,14 @@ async def pz_suggest(
         Field(
             min_length=1,
             max_length=100,
-            description="Persian or English word: a city ('تهران', 'shiraz'), a specialty or symptom ('قلب', 'پوست'), or the start of a doctor's name.",
+            description="City ('تهران', 'shiraz'), specialty or symptom ('قلب'), or start of a doctor's name.",
         ),
     ],
     limit: Annotated[int, Field(ge=1, le=30, description="Max items in each list.")] = 10,
 ) -> dict[str, Any]:
-    """Turn words into pz_search_doctors arguments: matching cities (city slug), specialties (specialty slug) and the site's type-ahead query completions (use one as `text`).
+    """Turn words into pz_search_doctors arguments: matching cities, specialties (with slugs) and the site's query completions (use one as `text`).
 
-    Call this first when you do not know the English city slug or the specialty slug. Then call
-    pz_search_doctors with city=<slug>, specialty=<slug> or text=<completion>.
+    Call first when you lack the city or specialty slug. Next: pz_search_doctors.
     """
     q = norm(query.strip())
     base, menu, qs = await asyncio.gather(
@@ -95,7 +94,7 @@ async def pz_search_doctors(
         Field(
             pattern=r"^[a-z0-9-]+$",
             max_length=60,
-            description="English city slug from pz_suggest, e.g. 'tehran', 'isfahan', 'mashhad'; 'ir' = all of Iran (best for online visits and name searches).",
+            description="City slug from pz_suggest, e.g. 'tehran'; 'ir' = all of Iran (best for online visits and names).",
         ),
     ] = "ir",
     specialty: Annotated[
@@ -103,7 +102,7 @@ async def pz_search_doctors(
         Field(
             pattern=r"^[a-z0-9-]+$",
             max_length=80,
-            description="Specialty slug from pz_suggest: a group ('cardiovascular', 'dermatology', 'general-practitioner') or an expertise ('exp-cardiovascular-diseases').",
+            description="Specialty slug from pz_suggest: a group ('cardiovascular') or an expertise ('exp-cardiovascular-diseases').",
         ),
     ] = None,
     text: Annotated[
@@ -111,36 +110,30 @@ async def pz_search_doctors(
         Field(
             min_length=2,
             max_length=100,
-            description="Free text in Persian: a doctor's name ('هدیه جباری'), a disease or a center, e.g. 'آزمایشگاه'.",
+            description="Persian text: doctor name ('هدیه جباری'), disease or center.",
         ),
     ] = None,
     visit_type: Annotated[
         Literal["any", "online", "in_person"],
-        Field(
-            description="'online' = doctors with an online visit (phone or messenger), 'in_person' = office booking."
-        ),
+        Field(description="'online' = online visit, 'in_person' = office booking."),
     ] = "any",
     sort: Annotated[
         Literal["best", "earliest", "cheapest_online", "most_viewed", "least_waiting", "popular"],
-        Field(
-            description="Order. 'earliest' = nearest free appointment first (drops doctors without free slots); 'cheapest_online' = cheapest online visit first."
-        ),
+        Field(description="'earliest' = nearest free slot first (drops doctors without free slots)."),
     ] = "best",
     gender: Annotated[Literal["male", "female"] | None, Field(description="Doctor's gender.")] = None,
     degree: Annotated[
         Literal["فلوشیپ", "فوق تخصص", "دکترای تخصصی", "متخصص", "دکترای", "کارشناس ارشد", "کارشناس"] | None,
-        Field(
-            description="Academic degree, e.g. 'فوق تخصص' (subspecialist), 'متخصص' (specialist), 'فلوشیپ' (fellowship)."
-        ),
+        Field(description="Academic degree, e.g. 'فوق تخصص' (subspecialist)."),
     ] = None,
     work_time: Annotated[
-        Literal["morning", "afternoon", "night"] | None, Field(description="Doctor works in that part of the day.")
+        Literal["morning", "afternoon", "night"] | None, Field(description="Works in that part of the day.")
     ] = None,
     center_id: Annotated[
         str | None,
         Field(
             pattern=r"^[0-9a-fA-F-]{1,40}$",
-            description="Only doctors of one hospital or clinic: its center_id from pz_center or a center result, e.g. '204'.",
+            description="Only doctors of one hospital or clinic: its center_id from pz_center, e.g. '204'.",
         ),
     ] = None,
     centers_only: Annotated[
@@ -149,13 +142,11 @@ async def pz_search_doctors(
     page: Annotated[int, Field(ge=1, le=100, description="1-based page number.")] = 1,
     limit: Annotated[int, Field(ge=1, le=50, description="Results per page (the site caps it at 50).")] = 10,
 ) -> dict[str, Any]:
-    """Search Paziresh24 doctors (or hospitals and clinics) by city, specialty, name, online visit, gender, degree, with sorting and paging.
+    """Search doctors (or hospitals and clinics) by city, specialty, name, visit type, gender and degree, sorted and paged.
 
-    Each doctor card has the slug, profile URL, photo (`image`), gender, rating, accepted insurance names, first free in-person
-    (earliest at any center, plus `first_free` per center) and online slots, the online visit price in Toman
-    (`online_visit` only when the doctor offers one), and the center/service ids needed for slot tools
-    (a null service_id comes from pz_doctor). There is no insurance filter: check `insurances` yourself. Next: pz_doctor for the full profile,
-    pz_first_available, or pz_free_days / pz_free_slots with the ids of a card's center.
+    Doctor cards carry slug, `url`, `image`, rating, insurances, first free in-person and online slots,
+    `online_visit` (only when offered, price in Toman) and the ids the slot tools need (a missing
+    service_id comes from pz_doctor). Next: pz_doctor, or pz_free_days / pz_free_slots.
     """
     route = f"{city}/center" if centers_only else "/".join(p for p in (city, specialty) if p)
     params: dict[str, Any] = {"page": page, "limit": limit}
@@ -193,13 +184,13 @@ async def pz_resolve_url(
         Field(
             min_length=3,
             max_length=600,
-            description="A paziresh24.com link (doctor profile /dr/..., center /center/..., online visit /factor/v2/...), percent-encoded or not, e.g. 'https://www.paziresh24.com/dr/دکتر-هدیه-جباری-0/'.",
+            description="paziresh24.com link (/dr/..., /center/..., /factor/v2/...), e.g. 'https://www.paziresh24.com/dr/دکتر-هدیه-جباری-0/'.",
         ),
     ],
 ) -> dict[str, Any]:
-    """Turn a paziresh24.com link into its kind ('doctor' or 'center') and slug, plus the clean URL.
+    """Turn a paziresh24.com link into its kind ('doctor' or 'center'), slug and clean URL.
 
-    Use when the user pastes a link. Next: pz_doctor(slug) for a doctor, pz_center(slug) for a hospital or clinic.
+    Use when the user pastes a link. Next: pz_doctor or pz_center.
     """
     kind, slug = parse_slug(url)
     return {"kind": kind, "slug": slug, "url": doctor_url(slug) if kind == "doctor" else center_url(slug)}
@@ -212,22 +203,22 @@ async def pz_center(
         Field(
             min_length=3,
             max_length=400,
-            description="Center slug from a pz_search_doctors center result (or its /center/... URL), e.g. 'بیمارستان-تخصصی-و-فوق-تخصصی-تریتا'.",
+            description="Center slug from a pz_search_doctors center result (or its URL), e.g. 'بیمارستان-تخصصی-و-فوق-تخصصی-تریتا'.",
         ),
     ],
     specialty: Annotated[
         str | None,
         Field(
             max_length=60,
-            description="Only doctors whose department or specialty contains this Persian text, e.g. 'قلب' or 'زنان'.",
+            description="Only doctors whose department or specialty contains this Persian text, e.g. 'قلب'.",
         ),
     ] = None,
     doctors_limit: Annotated[int, Field(ge=0, le=200, description="Max doctors to list (0 = none).")] = 30,
+    full_text: Annotated[bool, Field(description="True = do not clip the about text (default 1500 chars).")] = False,
 ) -> dict[str, Any]:
-    """Profile of a hospital or clinic: type, address, phone, website, map, about text, departments, and its doctors (slug, department, specialty, basic insurance flags).
+    """Profile of a hospital or clinic: type, address, phone, website, map, about, departments and its doctors (slug, department, specialty, basic insurances).
 
-    For a paged doctor list of the center sorted by nearest free time, call
-    pz_search_doctors(center_id=<center_id>, sort='earliest'). For one doctor, pz_doctor(slug).
+    Next: pz_search_doctors(center_id=..., sort='earliest') for its doctors by nearest free time, or pz_doctor.
     """
     _, slug = parse_slug(slug, "center")
     res = legacy(await fetch(f"{WWW}/api/slugProfile", method="POST", data={"slug": slug})) or {}
@@ -266,7 +257,7 @@ async def pz_center(
         "website": d.get("website") or None,
         "map": {"lat": float(lat), "lon": float(lon)} if lat and lon else None,
         "image": f"{CDN}{d['image']}" if d.get("image") else None,
-        "about": clip(html_text(d.get("biography")), 1500),
+        "about": clip(html_text(d.get("biography")), None if full_text else 1500),
         "departments": [
             {"name": s.get("alias_title"), "doctors": len(s.get("doctors") or [])} for s in d.get("services") or []
         ],
@@ -367,7 +358,7 @@ def parse_slug(value: str, default_kind: str = "doctor") -> tuple[str, str]:
     parts = [p for p in path.split("/") if p]
     if parts and "paziresh24.com" in parts[0]:  # a link pasted without https://
         parts = parts[1:]
-    if not parts:
+    if not parts or any(not p.strip(".") or any(ord(c) < 32 for c in p) for p in parts):
         raise ToolError(f"'{value}' is not a Paziresh24 slug or URL.")
     if parts[0] == "dr" and len(parts) > 1:
         return "doctor", parts[1]
@@ -445,6 +436,7 @@ def html_text(s: Any) -> str:
     return re.sub(r"\n\s*\n+", "\n", re.sub(r"[ \t\r\xa0]+", " ", text)).strip()
 
 
-def clip(s: Any, n: int) -> str | None:
+def clip(s: Any, n: int | None) -> str | None:
+    """Clip to n chars with an ellipsis; n None = no clip."""
     s = (s or "").strip()
-    return (s[: n - 1] + "…" if len(s) > n else s) or None
+    return (s[: n - 1] + "…" if n and len(s) > n else s) or None

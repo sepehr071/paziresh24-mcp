@@ -78,10 +78,7 @@ async def test_pz_search_doctors_online_cheapest(client, api):
             "name": "مطب دکتر سعيد نوريان",
             "type": "office",
             "city": "تهران",
-            "address": None,
-            "first_free": None,  # no office entry in freeturns_info (online only)
-            "booking_opens": None,
-        }
+        }  # no address, and no office entry in freeturns_info (online only): those keys are dropped
     ]
     assert data["results"][1]["in_person"] == {"first_free": "2026-10-06 16:00"}
 
@@ -97,7 +94,7 @@ async def test_pz_search_doctors_per_center_times_and_stale_online(client, api):
     assert doc["centers"][0]["first_free"] == "2026-10-26 08:03"  # the site: 4 Aban 8 AM at Treata
     assert doc["centers"][0]["booking_opens"] == "2026-10-19 00:00"
     assert off["slug"] == "دکتر-ساناز-سالمیان-پور" and "online_visit" not in off
-    assert off["centers"][0]["first_free"] == "2026-10-06 09:00" and off["centers"][0]["booking_opens"] is None
+    assert off["centers"][0]["first_free"] == "2026-10-06 09:00" and "booking_opens" not in off["centers"][0]
 
 
 async def test_pz_search_doctors_by_name(client, api):
@@ -106,7 +103,7 @@ async def test_pz_search_doctors_by_name(client, api):
     assert api.calls[0].url.params["text"] == "هدیه جباری" and "sortBy" not in api.calls[0].url.params
     doc, center = data["results"]
     assert doc["slug"] == JAB and doc["badges"] == ["منتخب پذیرش24"]
-    assert doc["centers"][0]["service_id"] is None  # this card has no services[]: pz_doctor has it
+    assert "service_id" not in doc["centers"][0]  # this card has no services[]: pz_doctor has it
     assert center == {
         "kind": "center",
         "name": "مطب دکتر هدیه جباری",

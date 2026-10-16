@@ -32,14 +32,15 @@ ORDER = {6: 0, 7: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6}  # Iranian week starts on Sat
 
 
 @tool("Doctor profile")
-async def pz_doctor(slug: Slug) -> dict[str, Any]:
-    """Full profile of one doctor: specialties, about text, medical council code, rating averages, insurance contracts, online visit (channels, price in Toman), and every office/hospital/clinic with address, phone, map, first free slot and services (ids, price, duration, weekly hours).
+async def pz_doctor(
+    slug: Slug,
+    full_text: Annotated[bool, Field(description="True = do not clip the about text (default 1200 chars).")] = False,
+) -> dict[str, Any]:
+    """Full profile of one doctor: specialties, about, rating averages, insurances, online visit (channels, price in Toman) and every center with address, phone, map, first free slot and services (ids, price, duration, hours).
 
-    A center with `booking_off: true` has online booking switched off (call its phone); `booking_opens` means
-    the booking period has ended and new slots open at that time. Use after pz_search_doctors or pz_resolve_url.
-    The center_id + user_center_id + service_id of a
-    service feed pz_first_available, pz_free_days, pz_free_slots and pz_visit_price. Reviews: pz_reviews.
-    Booking itself is done by the user on the returned `url` (it needs an SMS login).
+    `booking_off: true` = booking switched off (call the phone); `booking_opens` = new slots open then.
+    A service's center_id + user_center_id + service_id feed pz_free_days, pz_free_slots and
+    pz_visit_price. Next: pz_reviews, pz_first_available.
     """
     slug = _slug(slug)
     profile, rate, ids = await asyncio.gather(
@@ -96,7 +97,7 @@ async def pz_doctor(slug: Slug) -> dict[str, Any]:
         "medical_code": profile.get("medical_code"),
         "specialties": [e.get("alias_title") for e in profile.get("expertises") or [] if e.get("alias_title")],
         "specialty_slugs": [g.get("en_slug") for g in profile.get("group_expertises") or [] if g.get("en_slug")],
-        "about": clip(html_text(profile.get("biography")), 1200),
+        "about": clip(html_text(profile.get("biography")), None if full_text else 1200),
         "image": f"{CDN}{profile['image']}" if profile.get("image") else None,
         "profile_views": profile.get("number_of_visits"),
         "on_paziresh24_for": profile.get("insert_at_age"),
@@ -109,10 +110,9 @@ async def pz_doctor(slug: Slug) -> dict[str, Any]:
 
 @tool("Earliest free appointment")
 async def pz_first_available(slug: Slug) -> dict[str, Any]:
-    """Whether a doctor can be booked now and the nearest free slot, for in-person and online visits and per center (Tehran time).
+    """Whether a doctor can be booked now and the nearest free slot, in person, online and per center (Tehran time).
 
-    A quick check before pz_free_days / pz_free_slots. Center names and service ids are in pz_doctor
-    (online visit center_id is '5532').
+    A quick check before pz_free_days / pz_free_slots; names and service ids are in pz_doctor.
     """
     slug = _slug(slug)
     try:
@@ -140,14 +140,15 @@ async def pz_first_available(slug: Slug) -> dict[str, Any]:
 async def pz_reviews(
     slug: Slug,
     sort: Annotated[
-        Literal["relevant", "newest"], Field(description="'relevant' = the site's default order, 'newest' first.")
+        Literal["relevant", "newest"], Field(description="'relevant' = the site's default order.")
     ] = "relevant",
-    limit: Annotated[int, Field(ge=1, le=50, description="Reviews per page.")] = 10,
-    offset: Annotated[int, Field(ge=0, le=100_000, description="Reviews to skip (paging), e.g. 10 for page 2.")] = 0,
+    limit: Annotated[int, Field(ge=1, le=50, description="Reviews per page.")] = 5,
+    offset: Annotated[int, Field(ge=0, le=100_000, description="Reviews to skip, e.g. 5 for page 2.")] = 0,
+    full_text: Annotated[bool, Field(description="True = do not clip review text (default 400 chars).")] = False,
 ) -> dict[str, Any]:
-    """Patient reviews of a doctor (stars 1-5 for behaviour, explanation and treatment, text, visit reason, center, verified visit), paged, plus on the first page a summary: rating averages, counts and average waiting time per center.
+    """Patient reviews (stars 1-5, text clipped to 400 chars, visit reason, center, verified visit), paged, plus on the first page a summary: rating averages, counts and waiting time per center.
 
-    Reviewer names and ids are never returned. Online-visit reviews have center_id '5532'.
+    Reviewer names and ids are never returned.
     """
     slug = _slug(slug)
     s = quote(slug)
@@ -184,11 +185,11 @@ async def pz_reviews(
         ]
         out["summary"] = summary
     out["has_more"] = info.get("isLastPage") is False
-    out["reviews"] = [_review(r) for r in (data or {}).get("list") or []]
+    out["reviews"] = [_review(r, full_text) for r in (data or {}).get("list") or []]
     return out
 
 
-def _review(r: dict[str, Any]) -> dict[str, Any]:
+def _review(r: dict[str, Any], full_text: bool = False) -> dict[str, Any]:
     # user_id / user_display_name are the patient's: deliberately not copied.
     rec = r.get("recommended")
     return {
@@ -206,7 +207,7 @@ def _review(r: dict[str, Any]) -> dict[str, Any]:
         "waiting_minutes": r.get("waiting_time") if r.get("center_id") != ONLINE_CENTER else None,
         "posted": iso_when(r.get("created_at"), date_only=True),
         "likes": r.get("count_like") or 0,
-        "text": clip(r.get("description"), 1000),
+        "text": clip(r.get("description"), None if full_text else 400),
     }
 
 

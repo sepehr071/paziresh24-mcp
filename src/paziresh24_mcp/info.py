@@ -23,8 +23,9 @@ async def pz_faq(
         ),
     ] = None,
     limit: Annotated[int, Field(ge=1, le=50, description="Max answers.")] = 5,
+    full_text: Annotated[bool, Field(description="True = do not clip answers (default 1500 chars).")] = False,
 ) -> dict[str, Any]:
-    """Answers from the official Paziresh24 FAQ: how booking works, cancelling or moving an appointment, online visits (channels, prescriptions), payment and refunds.
+    """Answers from the official Paziresh24 FAQ: booking, cancelling or moving, online visits, payment and refunds.
 
     Without a query it lists the questions only. Use for "how do I ..." questions about the site.
     """
@@ -54,5 +55,5 @@ async def pz_faq(
     scored.sort()
     return {
         "total": len(scored),
-        "answers": [{"question": q, "answer": clip(a, 1500)} for _, _, q, a in scored[:limit]],
+        "answers": [{"question": q, "answer": clip(a, None if full_text else 1500)} for _, _, q, a in scored[:limit]],
     }

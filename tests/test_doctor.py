@@ -62,10 +62,10 @@ async def test_pz_doctor_inactive_center_and_booking_opens(client, api):
     api[f"/api/full-profile/{slug}/"] = fixture("full_profile_centers.json")
     data = (await client.call_tool("pz_doctor", {"slug": slug})).structured_content
     office, hospital, paveh = data["centers"]
-    assert office["booking_off"] is None and office["booking_opens"] is None
+    assert "booking_off" not in office and "booking_opens" not in office
     assert hospital["first_free"] == "2026-10-14 15:30" and hospital["booking_opens"] == "2026-10-13 00:00"
     assert paveh["name"] == "کلینیک تخصصی بیمارستان قدس پاوه" and paveh["booking_off"] is True
-    assert paveh["first_free"] is None and not paveh["services"][0]["bookable"]
+    assert "first_free" not in paveh and not paveh["services"][0]["bookable"]
     assert data["online_visit"]["center_id"] == "5532"
 
 
@@ -75,7 +75,7 @@ async def test_pz_doctor_secondary_data_missing(client, api):
     api[f"/api/doctors/{JAB}"] = fixture("lookup.json")
     api["/v1/doctors/4775150/insurance"] = {}  # biko: no data
     data = (await client.call_tool("pz_doctor", {"slug": JAB})).structured_content
-    assert data["rating"] is None and data["insurances"] is None and data["centers"]
+    assert "rating" not in data and "insurances" not in data and data["centers"]
 
 
 async def test_pz_doctor_unknown(client, api):
@@ -110,7 +110,7 @@ async def test_pz_reviews(client, api):
     assert data["summary"]["waiting_minutes"][0] == {"center_id": "5532", "minutes": 15, "answers": 20}
     r = data["reviews"][0]
     assert r["stars"] == 5 and r["reason"] == "کرونا" and r["posted"] == "2026-10-04" and r["center_id"] == "5532"
-    assert r["text"].startswith("ویزیت عالی") and r["waiting_minutes"] is None
+    assert r["text"].startswith("ویزیت عالی") and "waiting_minutes" not in r
     assert not any(k in r for k in ("user_id", "user_display_name"))
 
 
@@ -126,6 +126,14 @@ async def test_pz_reviews_unknown_slug(client, api):
     api[f"/api/doctors/{slug}"] = fixture("lookup.json")  # a real doctor without reviews: empty, no error
     data = (await client.call_tool("pz_reviews", {"slug": slug})).structured_content
     assert data["total"] == 0 and data["reviews"] == []
+
+
+async def test_pz_reviews_full_text(client, api):
+    long = "x" * 900
+    api[FEEDBACKS + RAJ] = {"pageInfo": {"totalRows": 1, "isLastPage": True}, "list": [{"Id": 1, "description": long}]}
+    short = (await client.call_tool("pz_reviews", {"slug": RAJ, "offset": 1})).structured_content
+    full = (await client.call_tool("pz_reviews", {"slug": RAJ, "offset": 1, "full_text": True})).structured_content
+    assert len(short["reviews"][0]["text"]) == 400 and full["reviews"][0]["text"] == long
 
 
 async def test_pz_reviews_next_page_skips_summary(client, api):

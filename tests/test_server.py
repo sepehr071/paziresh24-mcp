@@ -1,3 +1,4 @@
+import json
 import re
 import sys
 from pathlib import Path
@@ -8,7 +9,7 @@ from mcp import Client
 from mcp.client.stdio import StdioServerParameters
 
 from paziresh24_mcp import http
-from paziresh24_mcp.server import INSTRUCTIONS
+from paziresh24_mcp.server import INSTRUCTIONS, drop_empty, mcp
 
 pytestmark = pytest.mark.anyio
 
@@ -78,6 +79,73 @@ def test_proxy_env_is_the_only_proxy(monkeypatch):
     assert client.trust_env is False
 
 
+async def test_compact_output():
+    # The raw client (the conftest `client` re-parses the text into structured_content).
+    async with Client(mcp) as c:
+        result = await c.call_tool("pz_resolve_url", {"url": "https://www.paziresh24.com/center/تریتا/"})
+        text = result.content[0].text
+        assert len(result.content) == 1 and result.structured_content is None
+        assert ": " not in text and "\n" not in text and "\\u" not in text
+        tools = (await c.list_tools()).tools
+        assert all(t.output_schema is None for t in tools)
+        assert "title" not in json.dumps([t.input_schema for t in tools])
+
+
+def test_drop_empty_keeps_lists_zero_and_false():
+    assert drop_empty({"a": None, "b": "", "c": [], "d": 0, "e": False, "f": [{"g": None, "h": 1}]}) == {
+        "c": [],
+        "d": 0,
+        "e": False,
+        "f": [{"h": 1}],
+    }
+
+
+@pytest.mark.parametrize("slug", ["%2E%2E", "...", "/dr/./"])
+async def test_dot_slugs_are_rejected(client, slug):
+    result = await client.call_tool("pz_doctor", {"slug": slug})
+    assert result.is_error and "not a Paziresh24" in result.content[0].text
+
+
+async def test_fetch_cached_keys_on_params_and_expires(api, monkeypatch):
+    api["/x"] = lambda r: httpx.Response(200, json={"q": r.url.params.get("q"), "n": len(api.calls)})
+    url = "https://apigw.paziresh24.com/x"
+    a = await http.fetch_cached(url, params={"q": "1"})
+    a["q"] = "mutated"  # callers get a copy
+    assert (await http.fetch_cached(url, params={"q": "1"}))["q"] == "1"
+    assert (await http.fetch_cached(url, params={"q": "2"}))["q"] == "2" and len(api.calls) == 2
+    monkeypatch.setattr(http, "CACHE_TTL", -1)
+    http._cache.clear()
+    await http.fetch_cached(url, params={"q": "1"})
+    await http.fetch_cached(url, params={"q": "1"})
+    assert len(api.calls) == 4
+
+
+async def test_read_post_is_retried_once(api):
+    api["/booking/v2/getFreeDays"] = lambda r: httpx.Response(504, text="<html>timeout</html>")
+    with pytest.raises(http.ApiError):
+        await http.fetch("https://apigw.paziresh24.com/booking/v2/getFreeDays", method="POST", data={"a": "1"})
+    assert len(api.calls) == 2
+
+
+async def test_malformed_content_length_is_ignored(api):
+    api["/x"] = lambda r: httpx.Response(200, json={"ok": 1}, headers={"content-length": "abc"})
+    assert await http.fetch("https://apigw.paziresh24.com/x") == {"ok": 1}
+
+
+async def test_redirect_off_site_is_refused(api):
+    api["/r"] = lambda r: httpx.Response(302, headers={"location": "https://evil.example/x"})
+    with pytest.raises(http.ApiError, match="Could not reach"):
+        await http.fetch("https://apigw.paziresh24.com/r")
+    assert [r.url.host for r in api.calls] == ["apigw.paziresh24.com"]
+
+
+async def test_oversized_body_is_refused(api, monkeypatch):
+    monkeypatch.setattr(http, "MAX_BODY", 100)
+    api["/big"] = lambda r: httpx.Response(200, content=b"x" * 500)
+    with pytest.raises(http.ApiError, match="over"):
+        await http.fetch("https://apigw.paziresh24.com/big", text=True)
+
+
 async def test_stdio_smoke():
     """Start the real server process over stdio and call a tool that needs no network."""
     params = StdioServerParameters(command=sys.executable, args=["-m", "paziresh24_mcp.server"])
@@ -85,4 +153,4 @@ async def test_stdio_smoke():
         names = {t.name for t in (await c.list_tools()).tools}
         assert "pz_search_doctors" in names
         result = await c.call_tool("pz_resolve_url", {"url": "https://www.paziresh24.com/center/تریتا/"})
-        assert not result.is_error and result.structured_content["kind"] == "center"
+        assert not result.is_error and json.loads(result.content[0].text)["kind"] == "center"

@@ -13,7 +13,7 @@ from typing import Annotated, Any
 from mcp.server.mcpserver.exceptions import ToolError
 from pydantic import Field
 
-from .http import GW, fetch, legacy
+from .http import GW, fetch, fetch_cached, legacy
 from .registry import tool
 from .search import ONLINE_CENTER, at, day_start, today, toman
 
@@ -21,21 +21,21 @@ CenterId = Annotated[
     str,
     Field(
         pattern=r"^[0-9A-Za-z-]{1,40}$",
-        description="center_id from pz_doctor or a pz_search_doctors card, e.g. '291c1bfe-e8f3-414a-a82d-d6fe081683fb'; '5532' = online visit.",
+        description="center_id from pz_doctor or a search card, e.g. '291c1bfe-e8f3-414a-a82d-d6fe081683fb'; '5532' = online visit.",
     ),
 ]
 UserCenterId = Annotated[
     str,
     Field(
         pattern=r"^[0-9A-Za-z-]{1,40}$",
-        description="user_center_id of the same center (the doctor-at-center id), e.g. '09558bad-168d-4df8-b39d-437a260ca6fc'.",
+        description="user_center_id of the same center (doctor-at-center id).",
     ),
 ]
 ServiceId = Annotated[
     str,
     Field(
         pattern=r"^[0-9A-Za-z-]{1,40}$",
-        description="service_id of a service at that center, e.g. '1a4a8ec2-fdf9-436e-a32b-8fc4485f609c'.",
+        description="service_id of a service at that center.",
     ),
 ]
 JS_WEEKDAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]  # JS getDay()
@@ -45,10 +45,9 @@ NO_FREE_SLOT = 32
 
 @tool("Free appointment days")
 async def pz_free_days(center_id: CenterId, user_center_id: UserCenterId, service_id: ServiceId) -> dict[str, Any]:
-    """Days with at least one free appointment for one service of a doctor at one center, over the whole booking window (often 6-8 weeks), with the weekly days off and holidays in that window.
+    """Days with a free appointment for one service at one center over the whole booking window (often 6-8 weeks), with weekly days off and holidays.
 
-    Read-only (nothing is reserved). Get the ids from pz_doctor. Next: pz_free_slots for the times
-    of chosen days; the user books on the doctor's profile URL.
+    Ids from pz_doctor. Next: pz_free_slots for the times of chosen days.
     """
     body = await _free_days(center_id, user_center_id, service_id, with_slots=False)
     cal = body.get("calendar") or {}
@@ -70,18 +69,17 @@ async def pz_free_slots(
     user_center_id: UserCenterId,
     service_id: ServiceId,
     date_from: Annotated[
-        date | None, Field(description="First day, Gregorian YYYY-MM-DD (default today in Iran), e.g. '2026-10-10'.")
+        date | None, Field(description="First day, Gregorian YYYY-MM-DD (default today), e.g. '2026-10-10'.")
     ] = None,
     date_to: Annotated[
         date | None,
-        Field(description=f"Last day, inclusive (default date_from); at most {MAX_SLOT_DAYS} days after date_from."),
+        Field(description=f"Last day, inclusive (default date_from); at most {MAX_SLOT_DAYS} days after it."),
     ] = None,
 ) -> dict[str, Any]:
-    """Free appointment start times (Tehran HH:MM) per day for one service of a doctor at one center, for a date range.
+    """Free appointment start times (Tehran HH:MM) per day for one service at one center, for a date range.
 
-    Read-only: this only lists slots; it does not hold or book one. Get the ids from pz_doctor (or a
-    search card); find days with pz_free_days. If the range has no free slot, `next_free_day` points
-    to the next one. To book, send the user to the doctor's profile URL (booking needs an SMS login).
+    Ids from pz_doctor or a search card; find days with pz_free_days. With no free slot in the range,
+    `next_free_day` gives the next one.
     """
     start = date_from or today()
     end = date_to or start
@@ -130,17 +128,16 @@ async def pz_free_slots(
 
 @tool("Visit price")
 async def pz_visit_price(center_id: CenterId, user_center_id: UserCenterId, service_id: ServiceId) -> dict[str, Any]:
-    """Exact price of one service in Toman: the doctor's fee, VAT and the payable total (what the online-visit invoice shows), plus Paziresh24's refund-on-cancel setting.
+    """Exact price of one service in Toman: fee, VAT and payable total (the online-visit invoice), plus the refund-on-cancel setting.
 
-    Most useful for online visits (center_id '5532'). In-person office visits usually show 0: they are
-    paid at the office and the fee is not published.
+    Most useful for online visits (center_id '5532'); office visits usually show 0.
     """
     price, policy = await asyncio.gather(
         fetch(
             f"{GW}/v1/service-price",
             {"center_id": center_id, "service_id": service_id, "user_center_id": user_center_id},
         ),
-        fetch(f"{GW}/payment/v1/cancellation-policy"),
+        fetch_cached(f"{GW}/payment/v1/cancellation-policy"),
     )
     p = (price or {}).get("result") or {}
     fee = p.get("service_price")
@@ -162,9 +159,9 @@ async def pz_holidays(
         date, Field(description="Last day, Gregorian YYYY-MM-DD, at most a year later, e.g. '2026-12-31'.")
     ],
 ) -> dict[str, Any]:
-    """Official Iranian public holidays and occasions between two dates (Persian occasion name and the Hijri date).
+    """Official Iranian public holidays and occasions between two dates (Persian name, Hijri date).
 
-    Fridays (the weekly day off) are not listed. Use before suggesting appointment days.
+    Fridays are not listed. Use before suggesting appointment days.
     """
     if date_from.year < 1900:
         raise ToolError("Dates must be Gregorian (YYYY-MM-DD), not Jalali.")

@@ -55,7 +55,7 @@ async def test_pz_free_slots_default_today_and_next_day(client, api):
 async def test_pz_free_slots_no_free_slot_status(client, api):
     api[FREE_DAYS] = {"status": 32, "message": "عدم وجود نوبت خالی (تکمیل ظرفیت)", "result": []}
     data = (await client.call_tool("pz_free_slots", ONLINE)).structured_content
-    assert data["days"] == [] and data["next_free_day"] is None
+    assert data["days"] == [] and "next_free_day" not in data
 
 
 async def test_pz_free_days_booking_off(client, api):

@@ -2,13 +2,16 @@
 
 Every tool goes through `fetch`, which caps concurrency, sends a browser User-Agent, retries once on
 connection errors, timeouts and gateway 5xx (some apigw routes hang and answer a 504 page after 20-27 s),
-and turns HTTP failures into `ToolError` messages the model can act on.
+caps response bodies at 2 MB, refuses redirects off paziresh24.com, and turns HTTP failures into
+`ToolError` messages the model can act on.
 """
 
 from __future__ import annotations
 
 import asyncio
+import copy
 import os
+import time
 from typing import Any
 from urllib.parse import urlsplit
 
@@ -32,11 +35,14 @@ HEADERS = {
 MAX_CONCURRENCY = 4
 TIMEOUT = httpx.Timeout(20, connect=10)  # healthy calls take 0.4-3 s (cold search up to 10 s); hung routes 20-27 s
 RETRY_STATUS = {502, 503, 504}
+RETRY_DELAY = 0.5
+MAX_BODY = 2_000_000
+CACHE_TTL = 6 * 3600  # a long-lived stdio process must not serve a stale FAQ or city list forever
 
 _transport: httpx.AsyncBaseTransport | None = None
 _client: httpx.AsyncClient | None = None
 _limit: asyncio.Semaphore | None = None
-_cache: dict[str, Any] = {}
+_cache: dict[tuple, tuple[float, Any]] = {}
 
 
 class ApiError(ToolError):
@@ -54,6 +60,13 @@ def set_transport(transport: httpx.AsyncBaseTransport | None) -> None:
     _cache.clear()
 
 
+async def _same_site(request: httpx.Request) -> None:
+    """Runs for every hop, so a redirect cannot leave paziresh24.com."""
+    host = request.url.host
+    if host != "paziresh24.com" and not host.endswith(".paziresh24.com"):
+        raise httpx.UnsupportedProtocol(f"redirect to {host} refused")
+
+
 def _get_client() -> tuple[httpx.AsyncClient, asyncio.Semaphore]:
     global _client, _limit
     if _client is None:
@@ -64,6 +77,7 @@ def _get_client() -> tuple[httpx.AsyncClient, asyncio.Semaphore]:
             headers=HEADERS,
             timeout=TIMEOUT,
             follow_redirects=True,
+            event_hooks={"request": [_same_site]},
             trust_env=False,
             proxy=os.environ.get("PAZIRESH24_MCP_PROXY") or None,
         )
@@ -87,14 +101,14 @@ async def fetch(
     client, limit = _get_client()
     host = urlsplit(url).hostname
     r = None
-    # One retry: a reset connection, a hung route or a gateway 5xx often works on the second try.
+    # One retry (the POSTs here are read-only): a reset connection, a hung route or a gateway 5xx often works on the second try.
     for attempt in range(2):
         try:
             async with limit:
-                r = await client.request(method, url, params=params, data=data)
+                r = await _send(client, method, url, params, data)
         except (httpx.ConnectError, httpx.TimeoutException) as e:
             if attempt == 0:
-                await asyncio.sleep(1)
+                await asyncio.sleep(RETRY_DELAY)
                 continue
             if isinstance(e, httpx.TimeoutException):
                 raise ApiError(f"{host} did not answer in time. Try again in a moment.") from e
@@ -106,7 +120,7 @@ async def fetch(
                 f"Could not reach {host} ({type(e).__name__}). Check the internet connection, or set PAZIRESH24_MCP_PROXY."
             ) from e
         if r.status_code in RETRY_STATUS and attempt == 0:
-            await asyncio.sleep(1)
+            await asyncio.sleep(RETRY_DELAY)
             continue
         break
     assert r is not None
@@ -123,11 +137,43 @@ async def fetch(
         raise ApiError(f"{host} returned a non-JSON response (HTTP {r.status_code}).", r.status_code) from e
 
 
+async def _send(
+    client: httpx.AsyncClient, method: str, url: str, params: dict[str, Any] | None, data: dict[str, Any] | None
+) -> httpx.Response:
+    """One request with the body read in chunks and refused past MAX_BODY (the hung-route 504 page is small)."""
+    async with client.stream(method, url, params=params, data=data) as r:
+        try:
+            declared = int(r.headers.get("content-length") or 0)
+        except ValueError:
+            declared = 0  # malformed header: the chunked check below still caps the body
+        if declared > MAX_BODY:
+            raise ApiError(f"{urlsplit(url).hostname} sent a response over {MAX_BODY // 1_000_000} MB.", r.status_code)
+        body = bytearray()
+        async for chunk in r.aiter_bytes():
+            body += chunk
+            if len(body) > MAX_BODY:
+                raise ApiError(
+                    f"{urlsplit(url).hostname} sent a response over {MAX_BODY // 1_000_000} MB.", r.status_code
+                )
+    return httpx.Response(
+        r.status_code, content=bytes(body), headers={"content-type": r.headers.get("content-type", "")}
+    )
+
+
 async def fetch_cached(url: str, **kwargs: Any) -> Any:
-    """`fetch` for reference lists that rarely change (cities, specialty menu, FAQ): kept for the process."""
-    if url not in _cache:
-        _cache[url] = await fetch(url, **kwargs)
-    return _cache[url]
+    """`fetch` for reference data that rarely changes (cities, specialty menu, FAQ, cancellation policy): kept for
+    CACHE_TTL, keyed on every argument; callers get a copy, so they may mutate it."""
+    key = (
+        url,
+        repr(sorted((kwargs.get("params") or {}).items())),
+        repr(sorted((kwargs.get("data") or {}).items())),
+        kwargs.get("method", "GET"),
+        kwargs.get("text", False),
+    )
+    hit = _cache.get(key)
+    if hit is None or hit[0] < time.monotonic():
+        hit = _cache[key] = (time.monotonic() + CACHE_TTL, await fetch(url, **kwargs))
+    return copy.deepcopy(hit[1])
 
 
 def legacy(body: Any) -> Any:
