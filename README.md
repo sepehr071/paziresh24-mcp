@@ -29,7 +29,7 @@ and see the free appointment times, all from Claude, Cursor or Copilot.
 
 - **What:** Unofficial MCP server for Paziresh24 (پذیرش۲۴, paziresh24.com), the Iranian doctor appointment site. Queries in Persian or English; prices in Toman.
 - **Install:** `claude mcp add paziresh24 -- uvx paziresh24-mcp` (stdio, needs [uv](https://docs.astral.sh/uv/getting-started/installation/) and Python 3.10+).
-- **Auth:** none. Optional `PAZIRESH24_MCP_PROXY` sets an HTTP proxy for every request.
+- **Auth:** none. Optional `PAZIRESH24_MCP_PROXY` sets an HTTP proxy for every request (a comma-separated list rotates after a block).
 - **Access:** read-only. It cannot log in, hold a slot, book, pay or post a review; give the user the doctor's profile `url` to book.
 - **Tools:** 12, all prefixed `pz_`. Start with `pz_suggest` (words to city and specialty slugs), `pz_search_doctors`, `pz_doctor`, `pz_free_slots`, `pz_visit_price`.
 - **Typical sequence:** `pz_suggest` -> `pz_search_doctors` -> `pz_doctor` -> `pz_first_available` or `pz_free_slots` -> `pz_visit_price`.
@@ -247,7 +247,7 @@ blocks the site, set `PAZIRESH24_MCP_PROXY`.
 <details>
 <summary><b>A tool says the server "did not answer in time"</b></summary>
 
-Some Paziresh24 gateway routes sometimes hang for 20-30 seconds. The server retries a GET once; if it still fails, try
+Some Paziresh24 gateway routes sometimes hang for 20-30 seconds. The server retries up to twice; if it still fails, try
 again in a minute.
 </details>
 
@@ -269,7 +269,11 @@ npx @modelcontextprotocol/inspector uvx paziresh24-mcp
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `PAZIRESH24_MCP_PROXY` | unset | HTTP proxy for every request, e.g. `http://user:pass@host:port` |
+| `PAZIRESH24_MCP_PROXY` | unset | HTTP proxy for every request, e.g. `http://user:pass@host:port`; a comma-separated list is used one at a time, moving on after a block or connect error |
+
+Requests use a Chrome-like TLS and header profile, at most 2 at a time with a short random delay. If the site shows a
+bot-check page, install the optional browser fallback: `pip install "paziresh24-mcp[browser]"` (or `uvx --from "paziresh24-mcp[browser]" paziresh24-mcp`),
+then run `patchright install chromium`.
 
 <a id="فارسی"></a>
 
@@ -305,8 +309,8 @@ claude mcp add paziresh24 -- uvx paziresh24-mcp
 ```bash
 git clone https://github.com/sepehr071/paziresh24-mcp && cd paziresh24-mcp
 uv sync
-uv run pytest            # offline, against recorded responses
-uv run pytest -m live    # real APIs
+uv run python -m pytest            # offline, against recorded responses
+uv run python -m pytest -m live    # real APIs
 uv run ruff check .
 ```
 

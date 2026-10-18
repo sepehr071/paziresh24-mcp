@@ -69,7 +69,7 @@ async def test_retries_gateway_timeout_once(client, api):
 async def test_second_gateway_timeout_is_an_error(client, api):
     api["/v1/holidays"] = lambda r: httpx.Response(504, text="<html>Connection to origin timed out</html>")
     result = await client.call_tool("pz_holidays", {"date_from": "2026-10-01", "date_to": "2026-10-02"})
-    assert result.is_error and "HTTP 504" in result.content[0].text and len(api.calls) == 2
+    assert result.is_error and "HTTP 504" in result.content[0].text and len(api.calls) == 3  # retried twice
 
 
 def test_proxy_env_is_the_only_proxy(monkeypatch):
@@ -124,7 +124,7 @@ async def test_read_post_is_retried_once(api):
     api["/booking/v2/getFreeDays"] = lambda r: httpx.Response(504, text="<html>timeout</html>")
     with pytest.raises(http.ApiError):
         await http.fetch("https://apigw.paziresh24.com/booking/v2/getFreeDays", method="POST", data={"a": "1"})
-    assert len(api.calls) == 2
+    assert len(api.calls) == 3
 
 
 async def test_malformed_content_length_is_ignored(api):
