@@ -4,11 +4,11 @@
 
 <img src="https://raw.githubusercontent.com/sepehr071/paziresh24-mcp/main/.github/banner.png" alt="paziresh24-mcp: unofficial Paziresh24 MCP server for Claude, Cursor and Copilot" width="100%">
 
-# 🩺 paziresh24-mcp: Paziresh24 MCP server for AI agents
+# paziresh24-mcp: Paziresh24 MCP server for AI agents
 
-**Unofficial, read-only MCP server that lets your AI agent find the right Iranian doctor on Paziresh24 (پذیرش۲۴).**<br>
-Search doctors by specialty, city, name and online visit, read profiles, prices, insurances and patient reviews,<br>
-and see the free appointment times, all from Claude, Cursor or Copilot.
+**Let your AI agent find the right Iranian doctor on Paziresh24 (پذیرش۲۴).**<br>
+An unofficial, read-only MCP server for [Paziresh24](https://www.paziresh24.com), Iran's doctor appointment booking site:<br>
+search doctors by specialty, city, name and online visit, read profiles, prices, insurances and patient reviews, and see free appointment times, from Claude, Cursor or Copilot.
 
 [![PyPI](https://img.shields.io/pypi/v/paziresh24-mcp?color=2563eb)](https://pypi.org/project/paziresh24-mcp/)
 [![Python](https://img.shields.io/pypi/pyversions/paziresh24-mcp)](https://pypi.org/project/paziresh24-mcp/)
@@ -19,7 +19,7 @@ and see the free appointment times, all from Claude, Cursor or Copilot.
 [![Install in Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=paziresh24&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJwYXppcmVzaDI0LW1jcCJdfQ==)
 [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_paziresh24--mcp-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect/mcp/install?name=paziresh24&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22paziresh24-mcp%22%5D%7D)
 
-[Quick start](#quick-start) · [What it can do](#what-it-can-do) · [Tools](#tools) · [FAQ](#faq) · [فارسی](#فارسی)
+[For AI agents](#for-ai-agents) · [Why](#why) · [What it can do](#what-it-can-do) · [Quick start](#quick-start) · [Tools](#tools) · [How it works](#how-it-works) · [Good to know](#good-to-know) · [FAQ](#faq) · [Configuration](#configuration) · [فارسی](#فارسی) · [Development](#development) · [Related servers](#related-servers)
 
 </div>
 
@@ -27,20 +27,20 @@ and see the free appointment times, all from Claude, Cursor or Copilot.
 
 ## For AI agents
 
-- **What:** Unofficial MCP server for Paziresh24 (پذیرش۲۴, paziresh24.com), the Iranian doctor appointment site. Queries in Persian or English; prices in Toman.
-- **Install:** `claude mcp add paziresh24 -- uvx paziresh24-mcp` (stdio, needs [uv](https://docs.astral.sh/uv/getting-started/installation/) and Python 3.10+).
-- **Auth:** none. Optional `PAZIRESH24_MCP_PROXY` sets an HTTP proxy for every request (a comma-separated list rotates after a block).
-- **Access:** read-only. It cannot log in, hold a slot, book, pay or post a review; give the user the doctor's profile `url` to book.
-- **Tools:** 12, all prefixed `pz_`. Start with `pz_suggest` (words to city and specialty slugs), `pz_search_doctors`, `pz_doctor`, `pz_free_slots`, `pz_visit_price`.
+- **What:** unofficial MCP server (model context protocol) for Paziresh24 (پذیرش۲۴, [paziresh24.com](https://www.paziresh24.com)), the Iranian doctor appointment site: doctors, hospitals and clinics, in-person and online visits. Queries in Persian or English.
+- **Install:** `uvx paziresh24-mcp` or `claude mcp add paziresh24 -- uvx paziresh24-mcp`. Transport: stdio. Needs [uv](https://docs.astral.sh/uv/getting-started/installation/) (Python 3.10+).
+- **Auth:** none, no API key or account. Optional `PAZIRESH24_MCP_PROXY` sets an HTTP proxy for every request (a comma-separated list rotates after a block); system proxy settings are ignored.
+- **Access:** read-only. It cannot log in, hold a slot, book, pay or post a review, so no confirmation is needed before calling any tool. Give the user the doctor's profile `url` to book.
+- **Tools:** 12, all prefixed `pz_`, all annotated `readOnlyHint: true`. Start with `pz_suggest` (words to city and specialty slugs), `pz_search_doctors`, `pz_doctor`, `pz_free_slots`, `pz_visit_price`.
 - **Typical sequence:** `pz_suggest` -> `pz_search_doctors` -> `pz_doctor` -> `pz_first_available` or `pz_free_slots` -> `pz_visit_price`.
 - **Use when:** the user wants to find a doctor, compare ratings, insurance and online visit fees, or see free appointment times in Iran.
 - **Do not use when:** the user wants to actually book or pay, or needs medical advice.
-- **Output:** compact JSON. Prices in Toman, dates Gregorian `YYYY-MM-DD`, times Tehran local `HH:MM`. Doctors are identified by their Persian slug; slot and price tools take `center_id`, `user_center_id` and `service_id` from `pz_doctor` (online visits use center `5532`).
+- **Output:** compact JSON. Prices in **Toman**, dates Gregorian `YYYY-MM-DD`, times Tehran local `HH:MM`. Doctors are identified by their Persian slug; slot and price tools take `center_id`, `user_center_id` and `service_id` from `pz_doctor` (online visits use center `5532`).
 - **Machine-readable:** [server.json](https://github.com/sepehr071/paziresh24-mcp/blob/main/server.json), and the catalog of all Iranian MCP servers [awesome-iran-mcp](https://github.com/sepehr071/awesome-iran-mcp) (`TOOLS.md`, `servers.json`, `llms.txt`).
 
 ## Why
 
-Paziresh24 (paziresh24.com) lists tens of thousands of Iranian doctors, hospitals and clinics, with in-person
+Paziresh24 (paziresh24.com) is Iran's largest doctor appointment site, listing doctors, hospitals and clinics, with in-person
 booking and online visits by phone or messenger. Picking one means comparing specialties, ratings, insurance,
 prices and who has a free slot soon. An agent with `paziresh24-mcp` reads the same data the site shows and does
 the comparing for you, then gives you the profile link to book:
@@ -57,18 +57,29 @@ the comparing for you, then gives you the profile link to book:
 
 ## What it can do
 
-- 🔎 **Search doctors** by city, specialty, name, online visit, gender, degree and work time, sorted by best, nearest free time or cheapest online visit
-- 🏷️ **Resolve words**: Persian or English city and specialty names to search slugs, plus the site's type-ahead
-- 👩‍⚕️ **Read a profile**: specialties, about text, medical council code, offices and hospitals with address, phone and map, services, weekly hours, insurance contracts, online visit channels
-- 📅 **Find a time**: the earliest free appointment, the days with free slots, and the free times of each day (in person and online)
-- 💳 **Know the cost**: online visit fee, VAT and the payable total in Toman
-- ⭐ **Check reviews**: rating averages, average waiting time and paged patient reviews (no reviewer names)
-- 🏥 **Hospitals and clinics**: departments, doctors, phone, website, map
-- 🔒 **Read-only by design**: no login, no slot holds, no booking, no payment
+- **Search doctors** by city, specialty, name, online visit, gender, degree and work time, sorted by best, nearest free time or cheapest online visit
+- **Resolve words**: Persian or English city and specialty names to search slugs, plus the site's type-ahead
+- **Read a profile**: specialties, about text, medical council code, offices and hospitals with address, phone and map, services, weekly hours, insurance contracts, online visit channels
+- **Find a time**: the earliest free appointment, the days with free slots, and the free times of each day (in person and online)
+- **Know the cost**: online visit fee, VAT and the payable total in Toman
+- **Check reviews**: rating averages, average waiting time and paged patient reviews (no reviewer names)
+- **Hospitals and clinics**: departments, doctors, phone, website, map
+- **Read-only by design**: no login, no slot holds, no booking, no payment
+
+Example prompts:
+
+- "A dermatologist in Shiraz who accepts Tamin Ejtemaei and has a free slot this week."
+- "Cheapest online pediatrician visit available today?"
+- "What do patients say about this doctor? https://www.paziresh24.com/dr/..."
+- "Which cardiologists work at Treata hospital, and who is free soonest?"
+- "Is next Thursday an official holiday in Iran, and is this doctor free the day after?"
+- <span dir="rtl">یک متخصص پوست خانم در تهران که امروز ویزیت آنلاین دارد و گران نیست؟</span>
+- <span dir="rtl">نزدیک&zwnj;ترین نوبت خالی دکتر قلب در شیراز کی است؟</span>
+- <span dir="rtl">چطور نوبت ویزیت آنلاین را لغو کنم و پولم برمی&zwnj;گردد؟</span>
 
 ## Quick start
 
-You need [uv](https://docs.astral.sh/uv/getting-started/installation/).
+You need [uv](https://docs.astral.sh/uv/getting-started/installation/). No API key or account.
 
 <details open>
 <summary><b>Claude Code</b></summary>
@@ -95,7 +106,7 @@ Settings → Developer → Edit Config, then add:
 <details>
 <summary><b>Cursor</b></summary>
 
-Click **Install in Cursor** above, or add the Claude Desktop block to `~/.cursor/mcp.json`.
+Click **Install in Cursor** above, or add the Claude Desktop block to `~/.cursor/mcp.json` (or `.cursor/mcp.json` in a project).
 </details>
 
 <details>
@@ -113,18 +124,96 @@ Click **Install in VS Code** above, or add to `.vscode/mcp.json`:
 </details>
 
 <details>
+<summary><b>Codex CLI</b></summary>
+
+```bash
+codex mcp add paziresh24 -- uvx paziresh24-mcp
+```
+
+Or in `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.paziresh24]
+command = "uvx"
+args = ["paziresh24-mcp"]
+```
+</details>
+
+<details>
+<summary><b>Gemini CLI</b></summary>
+
+Add to `~/.gemini/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "paziresh24": { "command": "uvx", "args": ["paziresh24-mcp"] }
+  }
+}
+```
+</details>
+
+<details>
+<summary><b>Windsurf</b></summary>
+
+Add the Claude Desktop block to `~/.codeium/windsurf/mcp_config.json`.
+</details>
+
+<details>
 <summary><b>Anything else</b></summary>
 
 It's a standard stdio MCP server: run `uvx paziresh24-mcp`, or `pip install paziresh24-mcp` and run `paziresh24-mcp`.
 </details>
 
-Then just ask:
+Then just ask, in Persian or English, with one of the example prompts above.
 
-- "A dermatologist in Shiraz who accepts Tamin Ejtemaei and has a free slot this week."
-- "Cheapest online pediatrician visit available today?"
-- "What do patients say about this doctor? https://www.paziresh24.com/dr/..."
-- "Which cardiologists work at Treata hospital, and who is free soonest?"
-- <span dir="rtl">چطور نوبت ویزیت آنلاین را لغو کنم و پولم برمی&zwnj;گردد؟</span>
+## Tools
+
+Doctors are identified by their Persian slug, the part after `/dr/` in the profile URL
+(`دکتر-هدیه-جباری-0`); slot and price tools take the `center_id`, `user_center_id` and `service_id`
+that search results and `pz_doctor` return.
+
+<details open>
+<summary><b>Find</b> (4)</summary>
+
+| Tool | What it does |
+|---|---|
+| `pz_suggest` | Persian or English words → city slugs, specialty slugs and query completions |
+| `pz_search_doctors` | Doctors (or hospitals and clinics) by city, specialty, name, online visit, gender, degree, with sorting and paging |
+| `pz_resolve_url` | A paziresh24.com link → doctor or center slug |
+| `pz_center` | Hospital or clinic: address, phone, website, departments and doctors |
+</details>
+
+<details open>
+<summary><b>One doctor</b> (3)</summary>
+
+| Tool | What it does |
+|---|---|
+| `pz_doctor` | Full profile: specialties, about, rating, insurances, online visit, centers, services, prices, weekly hours |
+| `pz_first_available` | Earliest free in-person and online slot, per center |
+| `pz_reviews` | Patient reviews (paged) with rating averages and waiting time per center |
+</details>
+
+<details open>
+<summary><b>Times and prices</b> (4)</summary>
+
+| Tool | What it does |
+|---|---|
+| `pz_free_days` | Days with free slots over the whole booking window, days off and holidays |
+| `pz_free_slots` | Free appointment times per day for a date range |
+| `pz_visit_price` | Fee, VAT and payable total in Toman, and the refund-on-cancel setting |
+| `pz_holidays` | Official Iranian holidays between two dates |
+</details>
+
+<details open>
+<summary><b>Help</b> (1)</summary>
+
+| Tool | What it does |
+|---|---|
+| `pz_faq` | Paziresh24's official FAQ: booking, cancelling, online visits, refunds |
+</details>
+
+All 12 tools are annotated `readOnlyHint: true` and return compact JSON in one text block, so they don't flood the agent's context.
 
 ## How it works
 
@@ -144,67 +233,26 @@ Then just ask:
 ```
 
 `paziresh24-mcp` runs locally and calls the same public endpoints the Paziresh24 website uses.
-There's no hosted server in between, no API key, and nothing about you is sent anywhere else.
-
-## Tools
-
-Doctors are identified by their Persian slug, the part after `/dr/` in the profile URL
-(`دکتر-هدیه-جباری-0`); slot and price tools take the `center_id`, `user_center_id` and `service_id`
-that search results and `pz_doctor` return.
-
-<details open>
-<summary><b>🔎 Find</b> (4)</summary>
-
-| Tool | What it does |
-|---|---|
-| `pz_suggest` | Persian or English words → city slugs, specialty slugs and query completions |
-| `pz_search_doctors` | Doctors (or hospitals and clinics) by city, specialty, name, online visit, gender, degree, with sorting and paging |
-| `pz_resolve_url` | A paziresh24.com link → doctor or center slug |
-| `pz_center` | Hospital or clinic: address, phone, website, departments and doctors |
-</details>
-
-<details open>
-<summary><b>👩‍⚕️ One doctor</b> (3)</summary>
-
-| Tool | What it does |
-|---|---|
-| `pz_doctor` | Full profile: specialties, about, rating, insurances, online visit, centers, services, prices, weekly hours |
-| `pz_first_available` | Earliest free in-person and online slot, per center |
-| `pz_reviews` | Patient reviews (paged) with rating averages and waiting time per center |
-</details>
-
-<details open>
-<summary><b>📅 Times and prices</b> (4)</summary>
-
-| Tool | What it does |
-|---|---|
-| `pz_free_days` | Days with free slots over the whole booking window, days off and holidays |
-| `pz_free_slots` | Free appointment times per day for a date range |
-| `pz_visit_price` | Fee, VAT and payable total in Toman, and the refund-on-cancel setting |
-| `pz_holidays` | Official Iranian holidays between two dates |
-</details>
-
-<details open>
-<summary><b>ℹ️ Help</b> (1)</summary>
-
-| Tool | What it does |
-|---|---|
-| `pz_faq` | Paziresh24's official FAQ: booking, cancelling, online visits, refunds |
-</details>
-
-All 12 tools are annotated `readOnlyHint: true` and return compact structured JSON, so they don't flood the agent's context.
+There's no hosted server in between, no API key, and nothing about you is sent anywhere else. Requests use a
+Chrome-like TLS and header profile, at most 2 at a time with a short random delay, time out after 20 seconds and
+are retried up to twice on connect errors, timeouts, 429 and 5xx. Reference data (cities, specialties, FAQ) is
+cached for 6 hours. Redirects away from `*.paziresh24.com` are refused.
 
 ## Good to know
 
 - **Prices are in Toman** (1 Toman = 10 Rial). The APIs answer in Rial; the server divides by 10.
-- **In-person office visits usually show price 0**: they are paid at the office and the fee is not published. Online visits have a real fee; `pz_visit_price` adds the VAT (3% in tests).
+- **In-person office visits usually show price 0**: they are paid at the office and the fee is not published. Online visits have a real fee; `pz_visit_price` adds the VAT (3% on the checked example).
 - **Times are Tehran local** (`HH:MM`), dates Gregorian `YYYY-MM-DD` (1405-07-18 = 2026-10-10).
 - **Online visits** live in Paziresh24's virtual center `5532` (phone call or messenger such as WhatsApp; see `channels`).
 - **Search cards** carry the doctor's `gender` and photo (`image`, from pic.paziresh24.com; a real photo even where the profile has none).
 - **Insurance:** search cards list accepted insurance names, but there is no insurance filter. A `pz_doctor` result without `insurances` means no data, not "no insurance". Empty fields are omitted from all results; review text is clipped to 400 characters (pass `full_text=true` for everything; same for `pz_doctor`, `pz_center`, `pz_faq`) and is untrusted site content.
 - **Centers with booking off** stay in `pz_doctor` with `booking_off: true` (call their phone); `booking_opens` means the booking period has ended and new slots open at that time. Search cards give the first free time per center as well as the doctor's earliest overall.
 - **Booking is not possible here.** Booking needs an SMS login, so the agent gives you the doctor's profile URL. Free slots are listed, never held.
-- `sort="earliest"` drops doctors without a free slot. The order follows the site's search API; the sponsored cards on the website were not seen in it.
+- `sort="earliest"` drops doctors without a free slot. The order follows the site's search API; search results can include sponsored doctors.
+- **Limits:** `pz_search_doctors` returns at most 50 results per page. Reviews are paged (1-50 per page, default 5), and reviewer names are never returned.
+- **Specialty groups are broad:** a group slug such as `ophthalmology` also includes related professions (for example optometrists); the `exp-` slug of the same title (`exp-ophthalmology`) lists only that specialty. `pz_suggest` returns both.
+- **Holidays:** `pz_holidays` depends on the site's holidays endpoint, which answered HTTP 500 on 2026-10-10; if it fails, retry later.
+- **What it does not do:** no login, booking, cancelling, payment, chat, bookmarks or posting reviews; no patient data; no medical advice.
 - **Checked against the website:** on 2026-10-06 every tool's output was compared with the live paziresh24.com pages (names, prices, first free times, review order, search totals). Free days and slots were compared only where the site shows them without holding a slot.
 
 ## FAQ
@@ -238,6 +286,13 @@ their paths appear in the code). The agent finds the doctor and the time; you bo
 </details>
 
 <details>
+<summary><b>Can I filter doctors by insurance?</b></summary>
+
+Not in the search: the site's API ignores an insurance filter. Each search card lists the insurance names the doctor
+accepts, and `pz_doctor` returns the insurance contracts, so the agent can check them for you.
+</details>
+
+<details>
 <summary><b>Do I need an Iranian IP?</b></summary>
 
 No geo block was seen: direct calls and calls through a proxy in Turkey both worked (2026-10-06). If your network
@@ -249,6 +304,13 @@ blocks the site, set `PAZIRESH24_MCP_PROXY`.
 
 Some Paziresh24 gateway routes sometimes hang for 20-30 seconds. The server retries up to twice; if it still fails, try
 again in a minute.
+</details>
+
+<details>
+<summary><b>The site shows a bot-check page. What now?</b></summary>
+
+Install the optional browser fallback (see [Configuration](#configuration)). It clears the check once with a headless
+Chromium; without it the tool reports an error that says so.
 </details>
 
 <details>
@@ -269,11 +331,10 @@ npx @modelcontextprotocol/inspector uvx paziresh24-mcp
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `PAZIRESH24_MCP_PROXY` | unset | HTTP proxy for every request, e.g. `http://user:pass@host:port`; a comma-separated list is used one at a time, moving on after a block or connect error |
+| `PAZIRESH24_MCP_PROXY` | unset | HTTP proxy for every request, e.g. `http://user:pass@host:port`; a comma-separated list is used one at a time, moving on after a block or connect error. System proxy settings are ignored |
 
-Requests use a Chrome-like TLS and header profile, at most 2 at a time with a short random delay. If the site shows a
-bot-check page, install the optional browser fallback: `pip install "paziresh24-mcp[browser]"` (or `uvx --from "paziresh24-mcp[browser]" paziresh24-mcp`),
-then run `patchright install chromium`.
+If the site shows a bot-check page, install the optional browser fallback: `pip install "paziresh24-mcp[browser]"`
+(or `uvx --from "paziresh24-mcp[browser]" paziresh24-mcp`), then run `patchright install chromium`.
 
 <a id="فارسی"></a>
 
@@ -281,16 +342,20 @@ then run `patchright install chromium`.
 
 <div dir="rtl">
 
-**paziresh24-mcp** یک سرور MCP غیررسمی برای پذیرش۲۴ است که به دستیار هوش مصنوعی شما (Claude، Cursor، Copilot و ...)
+**paziresh24-mcp** یک سرور MCP غیررسمی برای [پذیرش۲۴](https://www.paziresh24.com) (سامانه نوبت&zwnj;دهی آنلاین پزشکان) است که به دستیار هوش مصنوعی شما (Claude، Cursor، Copilot و ...)
 اجازه می&zwnj;دهد در میان پزشکان ایران پزشک پیدا کند: جستجو بر اساس تخصص، شهر، نام و ویزیت آنلاین، خواندن پروفایل، بیمه&zwnj;ها، قیمت و نظرات بیماران، و دیدن
 زمان&zwnj;های خالی نوبت.
 
 - فقط خواندنی است: وارد حساب نمی&zwnj;شود، نوبت نگه نمی&zwnj;دارد، نوبت ثبت نمی&zwnj;کند و پرداخت نمی&zwnj;کند.
 - برای گرفتن نوبت، لینک صفحه پزشک را به شما می&zwnj;دهد.
 - همه قیمت&zwnj;ها به تومان است.
-- روی سیستم خود شما اجرا می&zwnj;شود و به هیچ سرور واسطی داده نمی&zwnj;فرستد.
+- ۱۲ ابزار دارد که همگی با `pz_` شروع می&zwnj;شوند.
+- روی سیستم خود شما اجرا می&zwnj;شود، کلید API لازم ندارد و به هیچ سرور واسطی داده نمی&zwnj;فرستد.
+- توصیه پزشکی نمی&zwnj;کند.
 
-**نصب در Claude Code:**
+**کلمات جستجو:** پذیرش۲۴، پذیرش 24، نوبت دهی پزشک، نوبت اینترنتی پزشک، نوبت دکتر، ویزیت آنلاین، مشاوره آنلاین پزشک، پیدا کردن پزشک متخصص، نزدیک&zwnj;ترین نوبت خالی، هزینه ویزیت، نظرات بیماران، بیمه تامین اجتماعی، سرور MCP، هوش مصنوعی.
+
+**نصب در Claude Code** (اول [uv](https://docs.astral.sh/uv/getting-started/installation/) را نصب کنید):
 
 </div>
 
@@ -299,6 +364,8 @@ claude mcp add paziresh24 -- uvx paziresh24-mcp
 ```
 
 <div dir="rtl">
+
+در Claude Desktop، Cursor و بقیه برنامه&zwnj;ها همان تنظیم بخش [Quick start](#quick-start) را بگذارید.
 
 بعد بپرسید: «یک متخصص پوست خانم در تهران که امروز ویزیت آنلاین دارد و گران نیست؟»
 
@@ -323,13 +390,16 @@ publishes to PyPI and the [MCP Registry](https://registry.modelcontextprotocol.i
 
 ## Related servers
 
-- [Doctoreto MCP server](https://github.com/sepehr071/doctoreto-mcp) for doctor visit fees, free times, clinics and labs
-- All Iranian MCP servers: [awesome-iran-mcp](https://github.com/sepehr071/awesome-iran-mcp)
+- [awesome-iran-mcp](https://github.com/sepehr071/awesome-iran-mcp): catalog of all Iranian-service MCP servers
+- [doctoreto-mcp](https://github.com/sepehr071/doctoreto-mcp) for doctor visit fees, free times, clinics and labs
+- [jabama-mcp](https://github.com/sepehr071/jabama-mcp) for Jabama stays
+- [mrbilit-mcp](https://github.com/sepehr071/mrbilit-mcp) for Mrbilit travel tickets
+- [flytoday-mcp](https://github.com/sepehr071/flytoday-mcp) for Flytoday flights
 
 ## Disclaimer
 
-Unofficial and not affiliated with or endorsed by Paziresh24. It uses the public endpoints of the paziresh24.com
-website, which can change without notice. It is not medical advice. Please keep request rates reasonable.
+Unofficial and not affiliated with or endorsed by Paziresh24. It is read-only and uses the public endpoints of the
+paziresh24.com website, which can change without notice. It is not medical advice. Please keep request rates reasonable.
 
 If this saves you clicks, a star helps others find it.
 
