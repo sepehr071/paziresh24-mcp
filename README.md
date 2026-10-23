@@ -36,7 +36,7 @@ search doctors by specialty, city, name and online visit, read profiles, prices,
 - **Use when:** the user wants to find a doctor, compare ratings, insurance and online visit fees, or see free appointment times in Iran.
 - **Do not use when:** the user wants to actually book or pay, or needs medical advice.
 - **Output:** compact JSON. Prices in **Toman**, dates Gregorian `YYYY-MM-DD`, times Tehran local `HH:MM`. Doctors are identified by their Persian slug; slot and price tools take `center_id`, `user_center_id` and `service_id` from `pz_doctor` (online visits use center `5532`).
-- **Machine-readable:** [server.json](https://github.com/sepehr071/paziresh24-mcp/blob/main/server.json), and the catalog of all Iranian MCP servers [awesome-iran-mcp](https://github.com/sepehr071/awesome-iran-mcp) (`TOOLS.md`, `servers.json`, `llms.txt`).
+- **Machine-readable:** [server.json](https://github.com/sepehr071/paziresh24-mcp/blob/main/server.json), and the catalog of all Iranian MCP servers [iran-mcp](https://github.com/sepehr071/iran-mcp) (`TOOLS.md`, `servers.json`, `llms.txt`).
 
 ## Why
 
@@ -390,7 +390,7 @@ publishes to PyPI and the [MCP Registry](https://registry.modelcontextprotocol.i
 
 ## Related servers
 
-- [awesome-iran-mcp](https://github.com/sepehr071/awesome-iran-mcp): catalog of all Iranian-service MCP servers
+- [iran-mcp](https://github.com/sepehr071/iran-mcp): catalog of all Iranian-service MCP servers
 - [doctoreto-mcp](https://github.com/sepehr071/doctoreto-mcp) for doctor visit fees, free times, clinics and labs
 - [jabama-mcp](https://github.com/sepehr071/jabama-mcp) for Jabama stays
 - [mrbilit-mcp](https://github.com/sepehr071/mrbilit-mcp) for Mrbilit travel tickets
@@ -405,9 +405,9 @@ If this saves you clicks, a star helps others find it.
 
 ## Author
 
-<a href="https://www.linkedin.com/in/sepehr-radmard"><img src="https://raw.githubusercontent.com/sepehr071/awesome-iran-mcp/main/assets/author-banner.png" alt="Sepehr Radmard: open-source MCP servers for the Iranian web. LinkedIn: linkedin.com/in/sepehr-radmard" width="100%"></a>
+<a href="https://www.linkedin.com/in/sepehr-radmard"><img src="https://raw.githubusercontent.com/sepehr071/iran-mcp/main/assets/author-banner.png" alt="Sepehr Radmard: open-source MCP servers for the Iranian web. LinkedIn: linkedin.com/in/sepehr-radmard" width="100%"></a>
 
-Built and maintained by **Sepehr Radmard** (سپهر رادمرد). Connect on [LinkedIn](https://www.linkedin.com/in/sepehr-radmard) or follow [@sepehr071 on GitHub](https://github.com/sepehr071) for more MCP servers for Iranian websites, all listed in [awesome-iran-mcp](https://github.com/sepehr071/awesome-iran-mcp). If this saves you time, a star on the repo helps other people find it.
+Built and maintained by **Sepehr Radmard** (سپهر رادمرد). Connect on [LinkedIn](https://www.linkedin.com/in/sepehr-radmard) or follow [@sepehr071 on GitHub](https://github.com/sepehr071) for more MCP servers for Iranian websites, all listed in [iran-mcp](https://github.com/sepehr071/iran-mcp). If this saves you time, a star on the repo helps other people find it.
 
 ## License
 
