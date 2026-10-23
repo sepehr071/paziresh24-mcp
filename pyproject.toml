@@ -1,6 +1,6 @@
 [project]
 name = "paziresh24-mcp"
-version = "0.4.1"
+version = "0.4.2"
 description = "Unofficial read-only MCP server for Paziresh24: find doctors, read profiles, prices and reviews, and see free appointment slots."
 readme = "README.md"
 license = "MIT"
