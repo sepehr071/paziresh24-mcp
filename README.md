@@ -15,6 +15,7 @@ search doctors by specialty, city, name and online visit, read profiles, prices,
 [![CI](https://github.com/sepehr071/paziresh24-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/sepehr071/paziresh24-mcp/actions/workflows/ci.yml)
 [![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.sepehr071%2Fpaziresh24--mcp-7c3aed)](https://registry.modelcontextprotocol.io/?q=paziresh24-mcp)
 [![License: MIT](https://img.shields.io/badge/license-MIT-16a34a)](https://github.com/sepehr071/paziresh24-mcp/blob/main/LICENSE)
+[![mcpfarsi](https://mcpfarsi.ir/badge/paziresh24.svg)](https://mcpfarsi.ir/servers/paziresh24/)
 
 [![Install in Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=paziresh24&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJwYXppcmVzaDI0LW1jcCJdfQ==)
 [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_paziresh24--mcp-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect/mcp/install?name=paziresh24&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22paziresh24-mcp%22%5D%7D)
@@ -395,6 +396,7 @@ publishes to PyPI and the [MCP Registry](https://registry.modelcontextprotocol.i
 - [jabama-mcp](https://github.com/sepehr071/jabama-mcp) for Jabama stays
 - [mrbilit-mcp](https://github.com/sepehr071/mrbilit-mcp) for Mrbilit travel tickets
 - [flytoday-mcp](https://github.com/sepehr071/flytoday-mcp) for Flytoday flights
+- Listed on [mcpfarsi.ir](https://mcpfarsi.ir/servers/paziresh24/), the Persian MCP marketplace
 
 ## Disclaimer
 

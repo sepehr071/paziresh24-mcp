@@ -35,6 +35,7 @@ Homepage = "https://github.com/sepehr071/paziresh24-mcp"
 Source = "https://github.com/sepehr071/paziresh24-mcp"
 Changelog = "https://github.com/sepehr071/paziresh24-mcp/releases"
 Issues = "https://github.com/sepehr071/paziresh24-mcp/issues"
+Website = "https://mcpfarsi.ir/servers/paziresh24/"
 
 [project.scripts]
 paziresh24-mcp = "paziresh24_mcp.server:main"
