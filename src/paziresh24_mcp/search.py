@@ -174,6 +174,8 @@ async def pz_search_doctors(
     s = (data or {}).get("search") or {}
     total = s.get("total") or 0
     results = [_card(r) for r in s.get("result") or [] if r.get("type") in ("doctor", "center")]
+    if sort == "earliest":  # the site's order ignores per-center times, so sort the page by the real nearest slot
+        results.sort(key=_nearest)
     return {"total": total, "page": page, "has_more": bool(results) and page * limit < total, "results": results}
 
 
@@ -265,6 +267,13 @@ async def pz_center(
         "matching_doctors": len(doctors),
         "doctors": doctors[:doctors_limit],
     }
+
+
+def _nearest(card: dict[str, Any]) -> str:
+    """Earliest first_free of a doctor card (centers, in-person, online); '9' sorts doctors without one last."""
+    times = [c["first_free"] for c in card.get("centers") or [] if c.get("first_free")]
+    times += [t for t in (card.get("in_person", {}).get("first_free"), (card.get("online_visit") or {}).get("first_free")) if t]
+    return min(times, default="9")
 
 
 def _card(r: dict[str, Any]) -> dict[str, Any]:

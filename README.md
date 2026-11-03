@@ -249,7 +249,7 @@ cached for 6 hours. Redirects away from `*.paziresh24.com` are refused.
 - **Insurance:** search cards list accepted insurance names, but there is no insurance filter. A `pz_doctor` result without `insurances` means no data, not "no insurance". Empty fields are omitted from all results; review text is clipped to 400 characters (pass `full_text=true` for everything; same for `pz_doctor`, `pz_center`, `pz_faq`) and is untrusted site content.
 - **Centers with booking off** stay in `pz_doctor` with `booking_off: true` (call their phone); `booking_opens` means the booking period has ended and new slots open at that time. Search cards give the first free time per center as well as the doctor's earliest overall.
 - **Booking is not possible here.** Booking needs an SMS login, so the agent gives you the doctor's profile URL. Free slots are listed, never held.
-- `sort="earliest"` drops doctors without a free slot. The order follows the site's search API; search results can include sponsored doctors.
+- `sort="earliest"` drops doctors without a free slot. Each page is sorted by the doctor's nearest free slot at any center (not across pages); search results can include sponsored doctors.
 - **Limits:** `pz_search_doctors` returns at most 50 results per page. Reviews are paged (1-50 per page, default 5), and reviewer names are never returned.
 - **Specialty groups are broad:** a group slug such as `ophthalmology` also includes related professions (for example optometrists); the `exp-` slug of the same title (`exp-ophthalmology`) lists only that specialty. `pz_suggest` returns both.
 - **Holidays:** `pz_holidays` depends on the site's holidays endpoint, which answered HTTP 500 on 2026-10-10; if it fails, retry later.
