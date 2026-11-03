@@ -272,7 +272,11 @@ async def pz_center(
 def _nearest(card: dict[str, Any]) -> str:
     """Earliest first_free of a doctor card (centers, in-person, online); '9' sorts doctors without one last."""
     times = [c["first_free"] for c in card.get("centers") or [] if c.get("first_free")]
-    times += [t for t in (card.get("in_person", {}).get("first_free"), (card.get("online_visit") or {}).get("first_free")) if t]
+    times += [
+        t
+        for t in (card.get("in_person", {}).get("first_free"), (card.get("online_visit") or {}).get("first_free"))
+        if t
+    ]
     return min(times, default="9")
 
 
