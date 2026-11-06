@@ -594,7 +594,7 @@ wheels = [
 
 [[package]]
 name = "paziresh24-mcp"
-version = "0.4.3"
+version = "0.5.0"
 source = { editable = "." }
 dependencies = [
     { name = "curl-cffi" },
