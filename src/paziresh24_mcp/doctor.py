@@ -34,13 +34,12 @@ ORDER = {6: 0, 7: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6}  # Iranian week starts on Sat
 @tool("Doctor profile")
 async def pz_doctor(
     slug: Slug,
-    full_text: Annotated[bool, Field(description="True = do not clip the about text (default 1200 chars).")] = False,
+    full_text: Annotated[bool, Field(description="Do not clip about (1200 chars).")] = False,
 ) -> dict[str, Any]:
     """Full profile of one doctor: specialties, about, rating averages, insurances, online visit (channels, price in Toman) and every center with address, phone, map, first free slot and services (ids, price, duration, hours).
 
     `booking_off: true` = booking switched off (call the phone); `booking_opens` = new slots open then.
-    A service's center_id + user_center_id + service_id feed pz_free_days, pz_free_slots and
-    pz_visit_price. Next: pz_reviews, pz_first_available.
+    A service's center_id + user_center_id + service_id feed the slot and price tools.
     """
     slug = _slug(slug)
     profile, rate, ids = await asyncio.gather(
@@ -99,8 +98,6 @@ async def pz_doctor(
         "specialty_slugs": [g.get("en_slug") for g in profile.get("group_expertises") or [] if g.get("en_slug")],
         "about": clip(html_text(profile.get("biography")), None if full_text else 1200),
         "image": f"{CDN}{profile['image']}" if profile.get("image") else None,
-        "profile_views": profile.get("number_of_visits"),
-        "on_paziresh24_for": profile.get("insert_at_age"),
         "rating": rating_summary(rate),
         "insurances": _insurances(insurance),
         "online_visit": online,
@@ -112,7 +109,7 @@ async def pz_doctor(
 async def pz_first_available(slug: Slug) -> dict[str, Any]:
     """Whether a doctor can be booked now and the nearest free slot, in person, online and per center (Tehran time).
 
-    A quick check before pz_free_days / pz_free_slots; names and service ids are in pz_doctor.
+    Quick check; names and service ids are in pz_doctor.
     """
     slug = _slug(slug)
     try:
@@ -139,12 +136,10 @@ async def pz_first_available(slug: Slug) -> dict[str, Any]:
 @tool("Doctor reviews")
 async def pz_reviews(
     slug: Slug,
-    sort: Annotated[
-        Literal["relevant", "newest"], Field(description="'relevant' = the site's default order.")
-    ] = "relevant",
-    limit: Annotated[int, Field(ge=1, le=50, description="Reviews per page.")] = 5,
-    offset: Annotated[int, Field(ge=0, le=100_000, description="Reviews to skip, e.g. 5 for page 2.")] = 0,
-    full_text: Annotated[bool, Field(description="True = do not clip review text (default 400 chars).")] = False,
+    sort: Annotated[Literal["relevant", "newest"], Field(description="'relevant' = site default.")] = "relevant",
+    limit: Annotated[int, Field(ge=1, le=50)] = 5,
+    offset: Annotated[int, Field(ge=0, le=100_000, description="Reviews to skip.")] = 0,
+    full_text: Annotated[bool, Field(description="Do not clip text (400 chars).")] = False,
 ) -> dict[str, Any]:
     """Patient reviews (stars 1-5, text clipped to 400 chars, visit reason, center, verified visit), paged, plus on the first page a summary: rating averages, counts and waiting time per center.
 
@@ -193,7 +188,6 @@ def _review(r: dict[str, Any], full_text: bool = False) -> dict[str, Any]:
     # user_id / user_display_name are the patient's: deliberately not copied.
     rec = r.get("recommended")
     return {
-        "id": r.get("Id"),
         "stars": r.get("avg_rate_value"),
         "behaviour": r.get("doctor_encounter"),
         "explanation": r.get("explanation_of_issue"),

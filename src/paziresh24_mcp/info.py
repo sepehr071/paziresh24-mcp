@@ -19,11 +19,11 @@ async def pz_faq(
         str | None,
         Field(
             max_length=100,
-            description="Topic words in Persian, e.g. 'لغو نوبت' (cancel), 'استرداد' (refund), 'ویزیت آنلاین' (online visit). Empty = list every question.",
+            description="Persian topic words, e.g. 'لغو نوبت'. Empty = list every question.",
         ),
     ] = None,
-    limit: Annotated[int, Field(ge=1, le=50, description="Max answers.")] = 5,
-    full_text: Annotated[bool, Field(description="True = do not clip answers (default 1500 chars).")] = False,
+    limit: Annotated[int, Field(ge=1, le=50)] = 5,
+    full_text: Annotated[bool, Field(description="Do not clip answers (1500 chars).")] = False,
 ) -> dict[str, Any]:
     """Answers from the official Paziresh24 FAQ: booking, cancelling or moving, online visits, payment and refunds.
 

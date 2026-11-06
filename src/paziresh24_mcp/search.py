@@ -35,7 +35,7 @@ Slug = Annotated[
     Field(
         min_length=3,
         max_length=400,
-        description="Doctor slug (Persian, e.g. 'دکتر-هدیه-جباری-0') or profile URL.",
+        description="Doctor slug (Persian, e.g. 'دکتر-هدیه-جباری-0') or URL.",
     ),
 ]
 
@@ -47,7 +47,7 @@ async def pz_suggest(
         Field(
             min_length=1,
             max_length=100,
-            description="City ('تهران', 'shiraz'), specialty or symptom ('قلب'), or start of a doctor's name.",
+            description="City, specialty, symptom or start of a doctor's name, e.g. 'قلب'.",
         ),
     ],
     limit: Annotated[int, Field(ge=1, le=30, description="Max items in each list.")] = 10,
@@ -94,7 +94,7 @@ async def pz_search_doctors(
         Field(
             pattern=r"^[a-z0-9-]+$",
             max_length=60,
-            description="City slug from pz_suggest, e.g. 'tehran'; 'ir' = all of Iran (best for online visits and names).",
+            description="City slug from pz_suggest, e.g. 'tehran'; 'ir' = all Iran.",
         ),
     ] = "ir",
     specialty: Annotated[
@@ -102,7 +102,7 @@ async def pz_search_doctors(
         Field(
             pattern=r"^[a-z0-9-]+$",
             max_length=80,
-            description="Specialty slug from pz_suggest: a group ('cardiovascular') or an expertise ('exp-cardiovascular-diseases').",
+            description="Specialty slug from pz_suggest, e.g. 'cardiovascular' or 'exp-cardiovascular-diseases'.",
         ),
     ] = None,
     text: Annotated[
@@ -110,43 +110,41 @@ async def pz_search_doctors(
         Field(
             min_length=2,
             max_length=100,
-            description="Persian text: doctor name ('هدیه جباری'), disease or center.",
+            description="Persian doctor name, disease or center.",
         ),
     ] = None,
     visit_type: Annotated[
         Literal["any", "online", "in_person"],
-        Field(description="'online' = online visit, 'in_person' = office booking."),
+        Field(description="'in_person' = office booking."),
     ] = "any",
     sort: Annotated[
         Literal["best", "earliest", "cheapest_online", "most_viewed", "least_waiting", "popular"],
-        Field(description="'earliest' = nearest free slot first (drops doctors without free slots)."),
+        Field(description="'earliest' drops doctors without free slots."),
     ] = "best",
     gender: Annotated[Literal["male", "female"] | None, Field(description="Doctor's gender.")] = None,
     degree: Annotated[
         Literal["فلوشیپ", "فوق تخصص", "دکترای تخصصی", "متخصص", "دکترای", "کارشناس ارشد", "کارشناس"] | None,
-        Field(description="Academic degree, e.g. 'فوق تخصص' (subspecialist)."),
+        Field(description="Academic degree."),
     ] = None,
     work_time: Annotated[
-        Literal["morning", "afternoon", "night"] | None, Field(description="Works in that part of the day.")
+        Literal["morning", "afternoon", "night"] | None, Field(description="Part of day worked.")
     ] = None,
     center_id: Annotated[
         str | None,
         Field(
             pattern=r"^[0-9a-fA-F-]{1,40}$",
-            description="Only doctors of one hospital or clinic: its center_id from pz_center, e.g. '204'.",
+            description="Only this hospital or clinic's doctors: center_id from pz_center.",
         ),
     ] = None,
     centers_only: Annotated[
-        bool, Field(description="List hospitals and clinics of the city instead of doctors (ignores specialty).")
+        bool, Field(description="List the city's hospitals and clinics instead (ignores specialty).")
     ] = False,
-    page: Annotated[int, Field(ge=1, le=100, description="1-based page number.")] = 1,
-    limit: Annotated[int, Field(ge=1, le=50, description="Results per page (the site caps it at 50).")] = 10,
+    page: Annotated[int, Field(ge=1, le=100)] = 1,
+    limit: Annotated[int, Field(ge=1, le=50)] = 10,
 ) -> dict[str, Any]:
     """Search doctors (or hospitals and clinics) by city, specialty, name, visit type, gender and degree, sorted and paged.
 
-    Doctor cards carry slug, `url`, `image`, rating, insurances, first free in-person and online slots,
-    `online_visit` (only when offered, price in Toman) and the ids the slot tools need (a missing
-    service_id comes from pz_doctor). Next: pz_doctor, or pz_free_days / pz_free_slots.
+    Cards carry `url`, `image`, rating, insurances, first free slots, `online_visit` (price in Toman) and slot-tool ids (missing service_id: pz_doctor).
     """
     route = f"{city}/center" if centers_only else "/".join(p for p in (city, specialty) if p)
     params: dict[str, Any] = {"page": page, "limit": limit}
@@ -186,13 +184,13 @@ async def pz_resolve_url(
         Field(
             min_length=3,
             max_length=600,
-            description="paziresh24.com link (/dr/..., /center/..., /factor/v2/...), e.g. 'https://www.paziresh24.com/dr/دکتر-هدیه-جباری-0/'.",
+            description="paziresh24.com link (/dr/..., /center/..., /factor/v2/...).",
         ),
     ],
 ) -> dict[str, Any]:
     """Turn a paziresh24.com link into its kind ('doctor' or 'center'), slug and clean URL.
 
-    Use when the user pastes a link. Next: pz_doctor or pz_center.
+    Use when the user pastes a link.
     """
     kind, slug = parse_slug(url)
     return {"kind": kind, "slug": slug, "url": doctor_url(slug) if kind == "doctor" else center_url(slug)}
@@ -205,22 +203,22 @@ async def pz_center(
         Field(
             min_length=3,
             max_length=400,
-            description="Center slug from a pz_search_doctors center result (or its URL), e.g. 'بیمارستان-تخصصی-و-فوق-تخصصی-تریتا'.",
+            description="Center slug (or URL) from a pz_search_doctors center result.",
         ),
     ],
     specialty: Annotated[
         str | None,
         Field(
             max_length=60,
-            description="Only doctors whose department or specialty contains this Persian text, e.g. 'قلب'.",
+            description="Only doctors whose department or specialty contains this Persian text.",
         ),
     ] = None,
-    doctors_limit: Annotated[int, Field(ge=0, le=200, description="Max doctors to list (0 = none).")] = 30,
-    full_text: Annotated[bool, Field(description="True = do not clip the about text (default 1500 chars).")] = False,
+    doctors_limit: Annotated[int, Field(ge=0, le=200, description="0 = none.")] = 30,
+    full_text: Annotated[bool, Field(description="Do not clip about (1500 chars).")] = False,
 ) -> dict[str, Any]:
     """Profile of a hospital or clinic: type, address, phone, website, map, about, departments and its doctors (slug, department, specialty, basic insurances).
 
-    Next: pz_search_doctors(center_id=..., sort='earliest') for its doctors by nearest free time, or pz_doctor.
+    For its doctors by nearest free time: pz_search_doctors(center_id=..., sort='earliest').
     """
     _, slug = parse_slug(slug, "center")
     res = legacy(await fetch(f"{WWW}/api/slugProfile", method="POST", data={"slug": slug})) or {}
