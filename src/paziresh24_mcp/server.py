@@ -16,9 +16,10 @@ doctors, hospitals, clinics, in-person and online visits. Nothing here logs in, 
 booking needs an SMS login, so the user books on the doctor's `url`.
 
 Workflow:
-1. Words -> slugs: pz_suggest gives city slug, specialty slug and query completions. A pasted link:
-   pz_resolve_url.
-2. Search: pz_search_doctors(city, specialty, visit_type, sort='earliest' | 'cheapest_online', text=<name>).
+1. Words -> slugs: pz_suggest('قلب') or pz_suggest('shiraz') gives city slug, specialty slug and query
+   completions; a city slug is usually its plain English name ('tehran', 'shiraz'), so a city search can skip
+   it. A pasted link: pz_resolve_url.
+2. Search: pz_search_doctors(city='tehran', specialty, visit_type, sort='earliest' | 'cheapest_online', text=<name>).
    city='ir' is all Iran (good for online visits and names). centers_only=True lists hospitals and clinics.
 3. One doctor: pz_doctor(slug) -> specialties, about, rating, insurances, online visit, every center
    with services and the ids center_id + user_center_id + service_id. pz_reviews for patient reviews.

@@ -47,7 +47,7 @@ async def pz_suggest(
         Field(
             min_length=1,
             max_length=100,
-            description="City, specialty, symptom or start of a doctor's name, e.g. 'قلب'.",
+            description="City ('تهران', 'shiraz'), specialty or symptom ('قلب'), or start of a doctor's name.",
         ),
     ],
     limit: Annotated[int, Field(ge=1, le=30, description="Max items in each list.")] = 10,
@@ -94,7 +94,7 @@ async def pz_search_doctors(
         Field(
             pattern=r"^[a-z0-9-]+$",
             max_length=60,
-            description="City slug from pz_suggest, e.g. 'tehran'; 'ir' = all Iran.",
+            description="City slug, e.g. 'tehran' or 'shiraz' (pz_suggest finds others); 'ir' = all Iran.",
         ),
     ] = "ir",
     specialty: Annotated[
@@ -124,7 +124,7 @@ async def pz_search_doctors(
     gender: Annotated[Literal["male", "female"] | None, Field(description="Doctor's gender.")] = None,
     degree: Annotated[
         Literal["فلوشیپ", "فوق تخصص", "دکترای تخصصی", "متخصص", "دکترای", "کارشناس ارشد", "کارشناس"] | None,
-        Field(description="Academic degree."),
+        Field(description="Academic degree, e.g. 'فوق تخصص' (subspecialist)."),
     ] = None,
     work_time: Annotated[
         Literal["morning", "afternoon", "night"] | None, Field(description="Part of day worked.")
@@ -133,7 +133,7 @@ async def pz_search_doctors(
         str | None,
         Field(
             pattern=r"^[0-9a-fA-F-]{1,40}$",
-            description="Only this hospital or clinic's doctors: center_id from pz_center.",
+            description="Only this hospital or clinic's doctors: center_id from pz_center, e.g. '204'.",
         ),
     ] = None,
     centers_only: Annotated[

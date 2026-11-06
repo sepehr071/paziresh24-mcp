@@ -188,6 +188,7 @@ def _review(r: dict[str, Any], full_text: bool = False) -> dict[str, Any]:
     # user_id / user_display_name are the patient's: deliberately not copied.
     rec = r.get("recommended")
     return {
+        "id": r.get("Id"),
         "stars": r.get("avg_rate_value"),
         "behaviour": r.get("doctor_encounter"),
         "explanation": r.get("explanation_of_issue"),
