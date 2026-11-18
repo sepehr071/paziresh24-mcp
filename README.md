@@ -20,7 +20,7 @@ search doctors by specialty, city, name and online visit, read profiles, prices,
 [![Install in Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=paziresh24&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJwYXppcmVzaDI0LW1jcCJdfQ==)
 [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_paziresh24--mcp-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect/mcp/install?name=paziresh24&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22paziresh24-mcp%22%5D%7D)
 
-[For AI agents](#for-ai-agents) · [Why](#why) · [What it can do](#what-it-can-do) · [Quick start](#quick-start) · [Tools](#tools) · [How it works](#how-it-works) · [Good to know](#good-to-know) · [FAQ](#faq) · [Configuration](#configuration) · [فارسی](#فارسی) · [Development](#development) · [Related servers](#related-servers)
+[For AI agents](#for-ai-agents) · [Why](#why) · [What it can do](#what-it-can-do) · [Quick start](#quick-start) · [Tools](#tools) · [Good to know](#good-to-know) · [FAQ](#faq) · [Configuration](#configuration) · [فارسی](#فارسی) · [Development](#development) · [Related servers](#related-servers)
 
 </div>
 
@@ -215,29 +215,6 @@ that search results and `pz_doctor` return.
 </details>
 
 All 12 tools are annotated `readOnlyHint: true` and return compact JSON in one text block, so they don't flood the agent's context.
-
-## How it works
-
-```text
-  AI agent  (Claude, Cursor, Copilot, ...)
-      │
-      │  MCP over stdio
-      ▼
-  paziresh24-mcp  (runs on your machine)
-      │
-      │  HTTPS (JSON)
-      ├──────▶  apigw.paziresh24.com      (search, free days and slots, prices, holidays)
-      ├──────▶  drprofile.paziresh24.com  (doctor profiles)
-      ├──────▶  ravi-apis.paziresh24.com  (reviews and ratings)
-      ├──────▶  saman / biko.paziresh24.com (availability, insurance)
-      └──────▶  www.paziresh24.com        (cities, specialties, hospitals, FAQ)
-```
-
-`paziresh24-mcp` runs locally and calls the same public endpoints the Paziresh24 website uses.
-There's no hosted server in between, no API key, and nothing about you is sent anywhere else. Requests use a
-Chrome-like TLS and header profile, at most 2 at a time with a short random delay, time out after 20 seconds and
-are retried up to twice on connect errors, timeouts, 429 and 5xx. Reference data (cities, specialties, FAQ) is
-cached for 6 hours. Redirects away from `*.paziresh24.com` are refused.
 
 ## Good to know
 
